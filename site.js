@@ -389,7 +389,9 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   const nb = document.getElementById('navbar');
   const upd = () => {
     nb.classList.toggle('shadow', window.scrollY > 20);
-    nb.classList.toggle('pill', window.scrollY > 14);
+    const y = window.scrollY, on = nb.classList.contains('pill');
+    if (!on && y > 40) nb.classList.add('pill');
+    else if (on && y < 8) nb.classList.remove('pill');
   };
   window.addEventListener('scroll', upd, { passive: true });
   upd();

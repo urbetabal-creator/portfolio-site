@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <link rel="icon" type="image/png" href="assets/favicon.png"/>
   <title>My Work — AI Automation &amp; CRM Integration Projects | Urbe Tabal Tech-VA</title>
   <meta name="description" content="A collection of AI automation, Zapier, and GoHighLevel CRM projects by Urbe Tabal Jr. — lead routing, AI intake, booking workflows, and multi-step client onboarding systems."/>
   <meta name="robots" content="noindex, nofollow"/>
@@ -202,6 +203,7 @@
       #navbar,#navbar::before,#navbar::after{transition-duration:.01ms!important}
     }
     .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .nav-logo-img{width:32px;height:32px;object-fit:contain;flex-shrink:0}
     .nav-logo-dot{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation:pulse 2s ease-in-out infinite;flex-shrink:0}
     @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.7)}}
     .nav-logo-text{font-size:0.88rem;font-weight:700;color:var(--text);letter-spacing:-0.01em;transition:color 0.4s}
@@ -247,7 +249,7 @@
        WORK HERO
     ══════════════════════════════════════ */
     #work-hero{
-      padding:150px 6% 60px;position:relative;z-index:1;
+      padding:150px 6% 0;position:relative;z-index:1;
       background:transparent;
     }
     [data-theme="dark"] #work-hero{background:linear-gradient(135deg,rgba(10,15,30,0.6) 0%,rgba(15,23,42,0.4) 100%)}
@@ -286,7 +288,7 @@
     ══════════════════════════════════════ */
     .filter-bar{
       display:flex;flex-wrap:wrap;gap:12px;
-      margin:60px 0 4px;
+      margin:84px 0 0;
     }
     .filter-btn{
       font-family:var(--font-body);
@@ -301,6 +303,59 @@
     .filter-btn.active{
       background:var(--cyan);border-color:var(--cyan);color:#0A0F1E;
     }
+
+
+    /* ══════════════════════════════════════
+       PINNED FILTER PILLS (under the nav pill) + glass veil
+    ══════════════════════════════════════ */
+    :root{--fp-inset:12%}
+    @media(max-width:1100px){:root{--fp-inset:8%}}
+    @media(max-width:900px){:root{--fp-inset:5%}}
+    @media(max-width:640px){:root{--fp-inset:3%}}
+    .filter-row{
+      display:flex;flex-wrap:wrap;gap:10px;justify-content:center;will-change:transform;
+      width:fit-content;max-width:100%;margin:0 auto;padding:8px;border-radius:999px;
+      background:var(--glass-bg);border:1px solid var(--glass-border);
+      -webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);
+      box-shadow:0 8px 28px var(--shadow);
+      transition:background .95s cubic-bezier(.4,0,.1,1),border-color .95s cubic-bezier(.4,0,.1,1),box-shadow .95s cubic-bezier(.4,0,.1,1),-webkit-backdrop-filter .95s,backdrop-filter .95s;
+    }
+    @media(max-width:700px){.filter-row{border-radius:28px}}
+    .top-veil{
+      position:fixed;top:0;left:0;right:0;height:176px;z-index:150;pointer-events:none;opacity:0;
+      background:linear-gradient(180deg,var(--nav-bg) 0%,transparent 100%);
+      -webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%);
+      -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);
+      transition:opacity .95s cubic-bezier(.4,0,.1,1);
+    }
+    body.filters-pinned .top-veil{opacity:1}
+    body.filters-pinned #work-hero{z-index:190}
+    .filter-row.pinned{
+      position:fixed;top:var(--fp-top,92px);left:var(--fp-inset);right:var(--fp-inset);z-index:190;
+      width:auto;max-width:none;flex-wrap:nowrap;justify-content:center;gap:10px;padding:8px 6px;margin:0;border-radius:0;
+      background:transparent;border-color:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;
+      overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    }
+    .filter-row.pinned::-webkit-scrollbar{display:none}
+    .filter-btn{transition:border-color .2s,color .2s,background .95s cubic-bezier(.4,0,.1,1),transform .15s,box-shadow .95s cubic-bezier(.4,0,.1,1),font-size .95s cubic-bezier(.4,0,.1,1),padding .95s cubic-bezier(.4,0,.1,1)}
+    /* big at the start, compact once pinned */
+    .filter-row{padding:11px;gap:12px;transition:padding .95s cubic-bezier(.4,0,.1,1),gap .95s cubic-bezier(.4,0,.1,1),background .95s cubic-bezier(.4,0,.1,1),border-color .95s cubic-bezier(.4,0,.1,1),box-shadow .95s cubic-bezier(.4,0,.1,1),-webkit-backdrop-filter .95s,backdrop-filter .95s}
+    .filter-row .filter-btn{will-change:font-size,padding}
+    .filter-row .filter-btn{font-size:.95rem;padding:15px 25px}
+    .filter-row.pinned{padding:8px 6px;gap:10px}
+    .filter-row.pinned .filter-btn{font-size:.8rem;padding:11px 20px}
+    @media(max-width:1200px){.filter-row .filter-btn{font-size:.88rem;padding:13px 19px}}
+    @media(max-width:900px){.filter-row .filter-btn{font-size:.9rem;padding:13px 22px}}
+    @media(max-width:560px){.filter-row .filter-btn{font-size:.82rem;padding:11px 17px}}
+    .filter-row.pinned .filter-btn{
+      flex:0 0 auto;
+      background:var(--nav-bg);
+      -webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);
+      box-shadow:0 10px 30px var(--shadow),0 1px 2px var(--shadow);
+    }
+    .filter-row.pinned .filter-btn.active{background:var(--cyan)}
+    @media(max-width:700px){.filter-row.pinned{justify-content:flex-start}}
+    @media(prefers-reduced-motion:reduce){.top-veil{transition:none}}
 
     /* ══════════════════════════════════════
        WORK GRID — NUMBERED CASE STUDY LIST
@@ -576,7 +631,7 @@
     /* ══════════════════════════════════════
        FEATURED CASE STUDY + SCREENSHOT CARDS
     ══════════════════════════════════════ */
-    .cs{position:relative;margin-top:44px;padding:46px 42px 40px;border:1px solid var(--glass-border);border-radius:var(--r,20px);background:var(--glass-bg);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);overflow:hidden;transition:background .4s,border-color .4s}
+    .cs{position:relative;margin-top:8px;padding:46px 42px 40px;border:1px solid var(--glass-border);border-radius:var(--r,20px);background:var(--glass-bg);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);overflow:hidden;transition:background .4s,border-color .4s}
     .cs::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(720px circle at 90% -10%,rgba(0,212,255,.10),transparent 60%),radial-gradient(520px circle at 0% 115%,rgba(245,169,127,.09),transparent 60%)}
     .cs>*{position:relative}
     .cs-kicker{display:inline-flex;align-items:center;gap:9px;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);margin-bottom:16px}
@@ -630,6 +685,11 @@
     [data-theme="dark"] .work-card-shot.dark .work-card-img-wrap{background:#141414}
     .work-card-shot .work-card-img-wrap img{object-fit:contain;object-position:center;filter:none}
     .work-card-shot:hover .work-card-img-wrap img{transform:scale(1.03)}
+    /* cards: a little more opaque */
+    .cs{background:rgba(17,24,39,0.82)}
+    [data-theme="light"] .cs{background:rgba(255,254,251,0.85)}
+    .work-card{background:rgba(17,24,39,0.75)}
+    [data-theme="light"] .work-card{background:rgba(255,254,251,0.85)}
     @media(max-width:900px){.cs{padding:34px 22px 30px}.cs-stats{grid-template-columns:repeat(2,1fr)}.cs-cols{grid-template-columns:1fr;gap:20px}.cs-row,.cs-total{grid-template-columns:1fr;gap:8px}.cs-saved{text-align:left}}
     @media(max-width:760px){.work-card-shot .work-card-img-wrap{width:100%;flex-basis:auto}}
     @media(prefers-reduced-motion:reduce){.cs-bar i{transition:none!important}}
@@ -666,7 +726,54 @@
       .nav-burger{display:flex}
       .nav-mobile-panel .nav-cta-mobile{display:inline-flex;justify-content:center}
     }
+
+    /* about: equal-size, evenly aligned fact cards */
+    .fact-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;align-items:stretch}
+    .fact-card{display:flex;flex-direction:column;justify-content:flex-start;gap:0;min-height:132px;height:100%;padding:24px}
+    .fact-label{margin-bottom:12px}
+    .fact-value{margin:0}
+    .fact-grid{margin-bottom:44px}
+    .about-content{max-width:none}
+    .about-content>*:not(.fact-grid){max-width:760px}
+    @media(max-width:1000px){.fact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:520px){.fact-grid{grid-template-columns:1fr}.fact-card{min-height:0}}
+
+    .nav-cta{border-radius:999px!important;padding-left:22px!important;padding-right:22px!important}
+
+    /* smoother pill transition: gentle ease-in-out, longer, GPU hints */
+    #navbar,#navbar.pill{--pill-dur:760ms;--pill-ease:cubic-bezier(.45,.05,.2,1)}
+    @supports (transition-timing-function:linear(0,1)){#navbar,#navbar.pill{--pill-ease:cubic-bezier(.45,.05,.2,1)}}
+    #navbar{will-change:transform,padding;backface-visibility:hidden}
+    #navbar::before{will-change:clip-path;transition:clip-path var(--pill-dur) var(--pill-ease),border-color var(--pill-dur) var(--pill-ease),background .4s}
+    #navbar::after{will-change:opacity;transition:opacity calc(var(--pill-dur)*.8) var(--pill-ease)}
+    .nav-links,.nav-logo{transition:opacity .3s}
+
+    .nav-logo-img{width:32px;height:32px;object-fit:contain;flex-shrink:0}
+
+    /* theme switch: sits right of the CTA; on scroll it splits off into its own pill */
+    @media(min-width:901px){
+      .nav-right{padding-right:52px;transition:padding-right var(--pill-dur,587ms) var(--pill-ease,ease)}
+      .theme-btn{position:absolute;top:50%;margin-top:-19px;right:6%;
+        transition:background .3s,border-color .3s,transform .15s,right var(--pill-dur,587ms) var(--pill-ease,ease),width .35s,height .35s,margin-top .35s,box-shadow .4s}
+      #navbar.pill .nav-right{padding-right:0}
+      #navbar.pill .theme-btn{width:44px;height:44px;margin-top:-22px;right:calc(var(--pill-inset)/2 - 22px);
+        background:var(--nav-bg);-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);
+        border-color:var(--glass-border);box-shadow:0 10px 30px var(--shadow),0 1px 2px var(--shadow)}
+    }
+
+    /* stack: compact pills, full logos, no white tile */
+    #stack-detail .chip-row{gap:12px}
+    #stack-detail .chip-row .tool-chip{padding:8px 20px 8px 10px;gap:10px;font-size:.92rem;font-weight:600}
+    #stack-detail .chip-row .tool-chip-icon{width:30px;height:30px;border-radius:0;overflow:visible;background:transparent!important;border:0!important;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+    #stack-detail .chip-row .tool-chip-icon img{width:26px!important;height:26px!important;object-fit:contain}
+    #stack-detail .chip-row .tool-chip span,#stack-detail .chip-row .tool-chip-name{font-size:.92rem}
   </style>
+<style id="sparkles-bg-css">
+#sparkles-bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0;transition:opacity 1s ease}
+#sparkles-bg.ready{opacity:1}
+#sparkles-bg canvas{width:100%!important;height:100%!important}
+#aurora-mesh,#ai-lines-canvas{display:none!important}
+</style>
 </head>
 <body>
 <div class="curtain" id="pageCurtain" aria-hidden="true"></div>
@@ -696,15 +803,18 @@
 })();
 </script>
 
+<div class="top-veil" id="topVeil" aria-hidden="true"></div>
+<div id="sparkles-bg" aria-hidden="true"></div>
 <canvas id="ai-lines-canvas" aria-hidden="true"></canvas>
 
 <!-- NAV -->
 <nav id="navbar">
   <a class="nav-logo" href="index.html">
-    <span class="nav-logo-dot"></span>
+    <img class="nav-logo-img" src="assets/logo.png" alt="" width="32" height="32">
     <span class="nav-logo-text">Urbe Tabal Tech-VA</span>
   </a>
   <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
     <li><a href="services.html">Services</a></li>
     <li><a href="stack.html">Stack</a></li>
     <li><a href="work.html" class="active" aria-current="page">Work</a></li>
@@ -713,15 +823,16 @@
     <li><a href="contact.html">Contact</a></li>
   </ul>
   <div class="nav-right">
+    <a href="https://cal.com/urbe-tabal-avs1rh/free-ai-automation-discovery-call" class="nav-cta nav-cta-desktop" target="_blank" rel="noopener noreferrer">Book a Discovery Call</a>
     <button class="theme-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark mode">
       <span class="theme-btn-icon" id="themeIcon">🌙</span>
     </button>
-    <a href="https://cal.com/urbe-tabal-avs1rh/free-ai-automation-discovery-call" class="nav-cta nav-cta-desktop" target="_blank" rel="noopener noreferrer">Book a Discovery Call</a>
     <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
 <div class="nav-mobile-panel" id="navMobilePanel">
   <ul class="nav-mobile-links">
+    <li><a href="index.html">Home</a></li>
     <li><a href="services.html">Services</a></li>
     <li><a href="stack.html">Stack</a></li>
     <li><a href="work.html" class="active">Work</a></li>
@@ -746,7 +857,8 @@
       Back to website
     </a>
 
-    <nav class="filter-bar" aria-label="Filter projects by category">
+    <div class="filter-bar" id="filterBar" role="navigation" aria-label="Filter projects by category">
+      <div class="filter-row" id="filterRow">
       <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
       <button class="filter-btn" data-filter="gohighlevel" aria-pressed="false">GoHighLevel</button>
       <button class="filter-btn" data-filter="n8n" aria-pressed="false">n8n</button>
@@ -756,7 +868,8 @@
       <button class="filter-btn" data-filter="ai" aria-pressed="false">AI</button>
       <button class="filter-btn" data-filter="crm" aria-pressed="false">CRM</button>
       <button class="filter-btn" data-filter="automation" aria-pressed="false">Automation</button>
-    </nav>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -1618,7 +1731,9 @@ if (saved === 'light') setTheme(false);
   const nb = document.getElementById('navbar');
   const upd = () => {
     nb.classList.toggle('shadow', window.scrollY > 20);
-    nb.classList.toggle('pill', window.scrollY > 14);
+    const y = window.scrollY, on = nb.classList.contains('pill');
+    if (!on && y > 40) nb.classList.add('pill');
+    else if (on && y < 8) nb.classList.remove('pill');
   };
   window.addEventListener('scroll', upd, { passive: true });
   upd();
@@ -1918,11 +2033,88 @@ Cal.config.forwardQueryParams = true;
   // data-cal-namespace="30min"
   // `data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'`
   Cal.ns["30min"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
-  </script>
+  
+(function(){
+  const bar=document.getElementById('filterBar'), row=document.getElementById('filterRow'), nb=document.getElementById('navbar');
+  if(!bar||!row||!nb) return;
+  let pinned=false, ticking=false;
+  const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function flip(change){            // smooth glide between the in-page spot and the pinned spot
+    const f=row.getBoundingClientRect();
+    change();
+    if(reduce) return;
+    const l=row.getBoundingClientRect();
+    const dx=(f.left+f.width/2)-(l.left+l.width/2), dy=f.top-l.top;
+    row.style.transition='none';
+    row.style.transform='translate('+dx+'px,'+dy+'px)';
+    row.getBoundingClientRect();
+    row.style.transition='transform 950ms cubic-bezier(.4,0,.1,1)';
+    row.style.transform='';
+    clearTimeout(row._t); row._t=setTimeout(()=>{row.style.transition='';},1000);
+  }
+  function pinTop(){ return nb.offsetHeight + 10 + 16; }   // nav pill bottom + gap
+  function update(){
+    ticking=false;
+    const navPill=nb.classList.contains('pill');
+    const natural=bar.getBoundingClientRect().top;       // placeholder keeps the original spot
+    const should = navPill && natural < pinTop();
+    if(should && !pinned){
+      flip(()=>{
+        bar.style.height=row.offsetHeight+'px';
+        row.style.setProperty('--fp-top',pinTop()+'px');
+        row.classList.add('pinned'); document.body.classList.add('filters-pinned');
+      }); pinned=true;
+    } else if(!should && pinned){
+      flip(()=>{
+        row.classList.remove('pinned'); document.body.classList.remove('filters-pinned');
+        bar.style.height='';
+      }); pinned=false;
+    } else if(pinned){ row.style.setProperty('--fp-top',pinTop()+'px'); }
+  }
+  const req=()=>{ if(!ticking){ ticking=true; requestAnimationFrame(update);} };
+  window.addEventListener('scroll',req,{passive:true});
+  window.addEventListener('resize',req);
+  new MutationObserver(req).observe(nb,{attributes:true,attributeFilter:['class']});
+  update();
+})();
+</script>
   <!-- Cal element-click embed code ends -->
 
 
 <script>(function(){var b=document.getElementById("navBurger"),p=document.getElementById("navMobilePanel");if(!b||!p)return;function c(){p.classList.remove("open");b.classList.remove("open");b.setAttribute("aria-expanded","false")}b.addEventListener("click",function(){var o=p.classList.toggle("open");b.classList.toggle("open",o);b.setAttribute("aria-expanded",o?"true":"false")});p.querySelectorAll("a").forEach(function(a){a.addEventListener("click",c)})})();</script>
 <script src="press.js"></script>
+<script src="assets/tsparticles.slim.bundle.min.js"></script>
+<script id="sparkles-bg-js">
+(function(){
+  try{
+    if(!window.tsParticles||!window.loadSlim) return;
+    const el=document.getElementById('sparkles-bg');
+    const col=()=>document.documentElement.getAttribute('data-theme')==='light'?'#1e293b':'#ffffff';
+    let cur=null, ready=loadSlim(tsParticles);
+    function start(){
+      return ready.then(()=>tsParticles.load({id:'sparkles-bg-canvas',element:el,options:{
+        background:{color:{value:'transparent'}},
+        fullScreen:{enable:false},
+        fpsLimit:120,detectRetina:true,
+        particles:{
+          number:{value:100,density:{enable:true,width:400,height:400}},
+          color:{value:col()},
+          shape:{type:'circle'},
+          opacity:{value:{min:0.1,max:1},animation:{enable:true,speed:1,sync:false,startValue:'random'}},
+          size:{value:{min:0.6,max:1.4}},
+          move:{enable:true,direction:'none',speed:{min:0.1,max:1},random:false,straight:false,outModes:{default:'out'}}
+        }
+      }})).then(c=>{cur=c;el.classList.add('ready')});
+    }
+    start().catch(e=>console.warn('sparkles failed',e));
+    let last=col();
+    new MutationObserver(()=>{
+      if(col()===last) return; last=col();
+      try{ if(cur) cur.destroy(); }catch(e){}
+      start().catch(e=>console.warn('sparkles failed',e));
+    }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  }catch(e){console.warn('sparkles failed',e)}
+})();
+</script>
 </body>
 </html>

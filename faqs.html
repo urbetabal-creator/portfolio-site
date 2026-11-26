@@ -9,8 +9,15 @@
   <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,600&amp;f[]=general-sans@400,500,600&amp;display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="icon" type="image/png" href="assets/favicon.png"/>
   <link rel="stylesheet" href="site.css"/>
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What happens on the free discovery call?", "acceptedAnswer": {"@type": "Answer", "text": "We talk through how your business runs today, where the manual work and hand-offs are, and what you want automated. You leave with a clear idea of what can be built and the best way to go about it — no pressure and no obligation."}}, {"@type": "Question", "name": "Which tools and platforms do you work with?", "acceptedAnswer": {"@type": "Answer", "text": "Make.com, Zapier, n8n, GoHighLevel, HubSpot, Notion, Asana, Airtable and Google Sheets, plus AI tools like Claude and ChatGPT. If a tool has an API or webhooks, I can usually connect it — even when it doesn't integrate natively."}}, {"@type": "Question", "name": "Do I need to be technical to work with you?", "acceptedAnswer": {"@type": "Answer", "text": "No. I handle the technical side and explain things in plain language. Every project ends with a walkthrough and written documentation so your team understands what was built and can maintain it."}}, {"@type": "Question", "name": "How does a project run from start to finish?", "acceptedAnswer": {"@type": "Answer", "text": "Five steps: Discovery, Map the Workflow, Build, Automate, then Handover & Documentation. The full logic — triggers, actions, conditions and error paths — is documented before I touch a single tool, and everything is tested with real data before it goes live."}}, {"@type": "Question", "name": "Can you fix or improve automations I already have?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. If your existing workflows are slow, breaking or hard to follow, I audit the setup, find the bottlenecks and rebuild them for reliability and speed. See the Workflow Audit & Optimization service."}}, {"@type": "Question", "name": "How do you keep AI steps safe and trustworthy?", "acceptedAnswer": {"@type": "Answer", "text": "Duplicate checks and error handling run before anything is tagged or synced, every AI decision is logged so it can be traced, and if something looks uncertain it's flagged for your review instead of guessed."}}, {"@type": "Question", "name": "What kinds of businesses do you build for?", "acceptedAnswer": {"@type": "Answer", "text": "The live example on the home page covers e-commerce, coaching, real estate, clinics and agencies, but the approach applies to any business that runs on leads, bookings, follow-ups and tasks moving between apps."}}, {"@type": "Question", "name": "How much does it cost?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on scope — a single integration is very different from a full CRM build. After the discovery call I can give you a clear picture of what's involved so you can decide with confidence."}}, {"@type": "Question", "name": "How quickly will I hear back?", "acceptedAnswer": {"@type": "Answer", "text": "I reply within 24 hours, usually much sooner. The fastest way to get started is to book a discovery call from the contact page."}}]}</script>
+<style id="sparkles-bg-css">
+#sparkles-bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0;transition:opacity 1s ease}
+#sparkles-bg.ready{opacity:1}
+#sparkles-bg canvas{width:100%!important;height:100%!important}
+#aurora-mesh,#ai-lines-canvas{display:none!important}
+</style>
 </head>
 <body>
 <div class="curtain" id="pageCurtain" aria-hidden="true"></div>
@@ -21,27 +28,29 @@
   <div class="aurora-blob b2"></div>
   <div class="aurora-blob b3"></div>
 </div>
+<div id="sparkles-bg" aria-hidden="true"></div>
 <canvas id="ai-lines-canvas" aria-hidden="true"></canvas>
 
 <!-- NAV -->
 <nav id="navbar">
   <a class="nav-logo" href="index.html">
-    <span class="nav-logo-dot"></span>
+    <img class="nav-logo-img" src="assets/logo.png" alt="" width="32" height="32">
     <span class="nav-logo-text">Urbe Tabal Tech-VA</span>
   </a>
   <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
     <li><a href="services.html">Services</a></li>
     <li><a href="stack.html">Stack</a></li>
     <li><a href="work.html">Work</a></li>
     <li><a href="about.html">About</a></li>
-    <li><a href="faqs.html" class="active" aria-current="page">FAQs</a></li>
+    <li><a href="FAQs.html" class="active" aria-current="page">FAQs</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
   <div class="nav-right">
+    <a href="https://cal.com/urbe-tabal-avs1rh/free-ai-automation-discovery-call" class="nav-cta nav-cta-desktop" target="_blank" rel="noopener noreferrer">Book a Discovery Call</a>
     <button class="theme-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark mode">
       <span class="theme-btn-icon" id="themeIcon">🌙</span>
     </button>
-    <a href="https://cal.com/urbe-tabal-avs1rh/free-ai-automation-discovery-call" class="nav-cta nav-cta-desktop" target="_blank" rel="noopener noreferrer">Book a Discovery Call</a>
     <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -49,11 +58,12 @@
 </nav>
 <div class="nav-mobile-panel" id="navMobilePanel">
   <ul class="nav-mobile-links">
+    <li><a href="index.html">Home</a></li>
     <li><a href="services.html">Services</a></li>
     <li><a href="stack.html">Stack</a></li>
     <li><a href="work.html">Work</a></li>
     <li><a href="about.html">About</a></li>
-    <li><a href="faqs.html" class="active" aria-current="page">FAQs</a></li>
+    <li><a href="FAQs.html" class="active" aria-current="page">FAQs</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
   <a href="https://cal.com/urbe-tabal-avs1rh/free-ai-automation-discovery-call" class="nav-cta nav-cta-mobile" target="_blank" rel="noopener noreferrer">Book a Discovery Call</a>
@@ -145,7 +155,7 @@
       <li><a href="stack.html">Stack</a></li>
       <li><a href="work.html">Work</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="faqs.html">FAQs</a></li>
+      <li><a href="FAQs.html">FAQs</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
@@ -169,6 +179,39 @@
     });
   });
   open(0);
+})();
+</script>
+<script src="assets/tsparticles.slim.bundle.min.js"></script>
+<script id="sparkles-bg-js">
+(function(){
+  try{
+    if(!window.tsParticles||!window.loadSlim) return;
+    const el=document.getElementById('sparkles-bg');
+    const col=()=>document.documentElement.getAttribute('data-theme')==='light'?'#1e293b':'#ffffff';
+    let cur=null, ready=loadSlim(tsParticles);
+    function start(){
+      return ready.then(()=>tsParticles.load({id:'sparkles-bg-canvas',element:el,options:{
+        background:{color:{value:'transparent'}},
+        fullScreen:{enable:false},
+        fpsLimit:120,detectRetina:true,
+        particles:{
+          number:{value:100,density:{enable:true,width:400,height:400}},
+          color:{value:col()},
+          shape:{type:'circle'},
+          opacity:{value:{min:0.1,max:1},animation:{enable:true,speed:1,sync:false,startValue:'random'}},
+          size:{value:{min:0.6,max:1.4}},
+          move:{enable:true,direction:'none',speed:{min:0.1,max:1},random:false,straight:false,outModes:{default:'out'}}
+        }
+      }})).then(c=>{cur=c;el.classList.add('ready')});
+    }
+    start().catch(e=>console.warn('sparkles failed',e));
+    let last=col();
+    new MutationObserver(()=>{
+      if(col()===last) return; last=col();
+      try{ if(cur) cur.destroy(); }catch(e){}
+      start().catch(e=>console.warn('sparkles failed',e));
+    }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  }catch(e){console.warn('sparkles failed',e)}
 })();
 </script>
 </body>

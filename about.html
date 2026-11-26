@@ -9,7 +9,14 @@
   <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,600&amp;f[]=general-sans@400,500,600&amp;display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="icon" type="image/png" href="assets/favicon.png"/>
   <link rel="stylesheet" href="site.css"/>
+<style id="sparkles-bg-css">
+#sparkles-bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0;transition:opacity 1s ease}
+#sparkles-bg.ready{opacity:1}
+#sparkles-bg canvas{width:100%!important;height:100%!important}
+#aurora-mesh,#ai-lines-canvas{display:none!important}
+</style>
 </head>
 <body>
 <div class="curtain" id="pageCurtain" aria-hidden="true"></div>
@@ -20,15 +27,17 @@
   <div class="aurora-blob b2"></div>
   <div class="aurora-blob b3"></div>
 </div>
+<div id="sparkles-bg" aria-hidden="true"></div>
 <canvas id="ai-lines-canvas" aria-hidden="true"></canvas>
 
 <!-- NAV -->
 <nav id="navbar">
   <a class="nav-logo" href="index.html">
-    <span class="nav-logo-dot"></span>
+    <img class="nav-logo-img" src="assets/logo.png" alt="" width="32" height="32">
     <span class="nav-logo-text">Urbe Tabal Tech-VA</span>
   </a>
   <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
     <li><a href="services.html">Services</a></li>
     <li><a href="stack.html">Stack</a></li>
     <li><a href="work.html">Work</a></li>
@@ -37,10 +46,10 @@
     <li><a href="contact.html">Contact</a></li>
   </ul>
   <div class="nav-right">
+    <a href="https://cal.com/urbe-tabal-avs1rh/free-ai-automation-discovery-call" class="nav-cta nav-cta-desktop" target="_blank" rel="noopener noreferrer">Book a Discovery Call</a>
     <button class="theme-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark mode">
       <span class="theme-btn-icon" id="themeIcon">🌙</span>
     </button>
-    <a href="https://cal.com/urbe-tabal-avs1rh/free-ai-automation-discovery-call" class="nav-cta nav-cta-desktop" target="_blank" rel="noopener noreferrer">Book a Discovery Call</a>
     <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -48,6 +57,7 @@
 </nav>
 <div class="nav-mobile-panel" id="navMobilePanel">
   <ul class="nav-mobile-links">
+    <li><a href="index.html">Home</a></li>
     <li><a href="services.html">Services</a></li>
     <li><a href="stack.html">Stack</a></li>
     <li><a href="work.html">Work</a></li>
@@ -60,7 +70,7 @@
 
 <section id="about-detail" class="section page-first"><div class="section-inner"><div class="about-content"><p class="section-label reveal">About</p><h2 class="section-heading reveal">Hi, I'm Urbe.<br>I build the systems behind the scenes.</h2><div class="about-text"><p class="reveal">Most businesses don't struggle because they lack tools. They struggle because the tools don't talk to each other. Leads sit in one app, tasks in another, follow-ups depend on someone remembering.</p><p class="reveal">That's the gap I work in. I connect the pieces, automate the repetitive parts and organize the data so your team can spend its time on the work that actually needs a person.</p></div><div class="fact-grid"><div class="fact-card reveal"><div class="fact-label">Role</div><div class="fact-value">AI Automation Specialist &amp; Tech VA</div></div><div class="fact-card reveal"><div class="fact-label">Based in</div><div class="fact-value">Cebu City, Philippines</div></div><div class="fact-card reveal"><div class="fact-label">Focus</div><div class="fact-value">CRM builds, workflow automation, data organization</div></div><div class="fact-card reveal"><div class="fact-label">Brand</div><div class="fact-value">Urbe Tabal Tech-VA</div></div></div></div><div class="detail-group"><div class="reveal"><div class="detail-kicker">How I work</div><div class="detail-title">Reliable, traceable, easy to hand over</div><p class="detail-lead">The principles behind every build.</p></div><div class="detail-cards"><div class="detail-card reveal"><h4>Plan before building</h4><p>I document the full logic (triggers, actions, conditions and error paths) before touching a single tool.</p></div><div class="detail-card reveal"><h4>Test with real data</h4><p>Everything is built in your environment and tested with real data, so there are no surprises at launch.</p></div><div class="detail-card reveal"><h4>Fail safe, stay traceable</h4><p>Duplicate checks run first, AI decisions are logged and anything uncertain is flagged for your review instead of guessed.</p></div><div class="detail-card reveal"><h4>Hand over properly</h4><p>You get a walkthrough, written documentation and a support window so your team can own what was built.</p></div></div></div><div class="resume-block reveal" style="transition-delay:0.1s">
         <div class="resume-block-text">
-          <span class="resume-kicker"><i></i>Resume · PDF</span>
+          
           <div class="resume-block-title">Want the <span class="grad">full picture?</span></div>
           <div class="resume-block-sub">Download my resume — skills, experience, and projects all in one place.</div>
           <ul class="resume-points"><li>Skills &amp; tools</li><li>Experience</li><li>Projects</li></ul>
@@ -100,5 +110,38 @@
 </footer>
 <script src="site.js"></script>
 <script src="press.js"></script>
+<script src="assets/tsparticles.slim.bundle.min.js"></script>
+<script id="sparkles-bg-js">
+(function(){
+  try{
+    if(!window.tsParticles||!window.loadSlim) return;
+    const el=document.getElementById('sparkles-bg');
+    const col=()=>document.documentElement.getAttribute('data-theme')==='light'?'#1e293b':'#ffffff';
+    let cur=null, ready=loadSlim(tsParticles);
+    function start(){
+      return ready.then(()=>tsParticles.load({id:'sparkles-bg-canvas',element:el,options:{
+        background:{color:{value:'transparent'}},
+        fullScreen:{enable:false},
+        fpsLimit:120,detectRetina:true,
+        particles:{
+          number:{value:100,density:{enable:true,width:400,height:400}},
+          color:{value:col()},
+          shape:{type:'circle'},
+          opacity:{value:{min:0.1,max:1},animation:{enable:true,speed:1,sync:false,startValue:'random'}},
+          size:{value:{min:0.6,max:1.4}},
+          move:{enable:true,direction:'none',speed:{min:0.1,max:1},random:false,straight:false,outModes:{default:'out'}}
+        }
+      }})).then(c=>{cur=c;el.classList.add('ready')});
+    }
+    start().catch(e=>console.warn('sparkles failed',e));
+    let last=col();
+    new MutationObserver(()=>{
+      if(col()===last) return; last=col();
+      try{ if(cur) cur.destroy(); }catch(e){}
+      start().catch(e=>console.warn('sparkles failed',e));
+    }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  }catch(e){console.warn('sparkles failed',e)}
+})();
+</script>
 </body>
 </html>

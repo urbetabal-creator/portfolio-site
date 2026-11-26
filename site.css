@@ -804,7 +804,7 @@
     .proc-ln i{display:block;height:0;background:linear-gradient(180deg,var(--cyan),var(--cyan2));box-shadow:0 0 12px rgba(0,212,255,0.7);will-change:height}
     .proc-it{position:relative}
     .proc-dt{
-      position:absolute;left:-43px;top:50%;margin-top:-10px;width:20px;height:20px;border-radius:50%;
+      position:absolute;left:-41.5px;top:50%;margin-top:-10px;width:20px;height:20px;border-radius:50%;
       background:var(--bg);border:3px solid var(--cyan);box-shadow:0 0 14px rgba(0,212,255,0.45);
       transform:scale(0);transition:transform 500ms var(--bounce);
     }
@@ -822,7 +822,7 @@
     .proc-step{font:600 0.68rem/1 'SF Mono',ui-monospace,Menlo,Consolas,monospace;letter-spacing:0.14em;text-transform:uppercase;color:var(--cyan)}
     .proc-card .proc-title{font-size:1.15rem;font-weight:800;letter-spacing:-0.02em;margin:0;color:var(--text)}
     .proc-card .proc-desc{margin:0}
-    @media(max-width:560px){.proc-tl{padding-left:34px}.proc-dt{left:-33px}.proc-ln{left:7px}.proc-card{padding:20px 20px}}
+    @media(max-width:560px){.proc-tl{padding-left:34px}.proc-dt{left:-35.5px}.proc-ln{left:7px}.proc-card{padding:20px 20px}}
     @media(prefers-reduced-motion:reduce){.proc-dt,.proc-card{transform:none;opacity:1;transition:none}.proc-ln i{height:100%!important}}
 
     /* ══════════════════════════════════════
@@ -1076,3 +1076,44 @@
     .cta-band h3,.resume-block-title,.faq-t,.work-card-title,.modal-title,.fact-value,.pg-trust-title,.connect-title{
       font-family:'Inter',sans-serif!important;
     }
+
+    /* about: equal-size, evenly aligned fact cards */
+    .fact-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;align-items:stretch}
+    .fact-card{display:flex;flex-direction:column;justify-content:flex-start;gap:0;min-height:132px;height:100%;padding:24px}
+    .fact-label{margin-bottom:12px}
+    .fact-value{margin:0}
+    .fact-grid{margin-bottom:44px}
+    .about-content{max-width:none}
+    .about-content>*:not(.fact-grid){max-width:760px}
+    @media(max-width:1000px){.fact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:520px){.fact-grid{grid-template-columns:1fr}.fact-card{min-height:0}}
+
+    .nav-cta{border-radius:999px!important;padding-left:22px!important;padding-right:22px!important}
+
+    /* smoother pill transition: gentle ease-in-out, longer, GPU hints */
+    #navbar,#navbar.pill{--pill-dur:760ms;--pill-ease:cubic-bezier(.45,.05,.2,1)}
+    @supports (transition-timing-function:linear(0,1)){#navbar,#navbar.pill{--pill-ease:cubic-bezier(.45,.05,.2,1)}}
+    #navbar{will-change:transform,padding;backface-visibility:hidden}
+    #navbar::before{will-change:clip-path;transition:clip-path var(--pill-dur) var(--pill-ease),border-color var(--pill-dur) var(--pill-ease),background .4s}
+    #navbar::after{will-change:opacity;transition:opacity calc(var(--pill-dur)*.8) var(--pill-ease)}
+    .nav-links,.nav-logo{transition:opacity .3s}
+
+    .nav-logo-img{width:32px;height:32px;object-fit:contain;flex-shrink:0}
+
+    /* theme switch: sits right of the CTA; on scroll it splits off into its own pill */
+    @media(min-width:901px){
+      .nav-right{padding-right:52px;transition:padding-right var(--pill-dur,587ms) var(--pill-ease,ease)}
+      .theme-btn{position:absolute;top:50%;margin-top:-19px;right:6%;
+        transition:background .3s,border-color .3s,transform .15s,right var(--pill-dur,587ms) var(--pill-ease,ease),width .35s,height .35s,margin-top .35s,box-shadow .4s}
+      #navbar.pill .nav-right{padding-right:0}
+      #navbar.pill .theme-btn{width:44px;height:44px;margin-top:-22px;right:calc(var(--pill-inset)/2 - 22px);
+        background:var(--nav-bg);-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);
+        border-color:var(--glass-border);box-shadow:0 10px 30px var(--shadow),0 1px 2px var(--shadow)}
+    }
+
+    /* stack: compact pills, full logos, no white tile */
+    #stack-detail .chip-row{gap:12px}
+    #stack-detail .chip-row .tool-chip{padding:8px 20px 8px 10px;gap:10px;font-size:.92rem;font-weight:600}
+    #stack-detail .chip-row .tool-chip-icon{width:30px;height:30px;border-radius:0;overflow:visible;background:transparent!important;border:0!important;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+    #stack-detail .chip-row .tool-chip-icon img{width:26px!important;height:26px!important;object-fit:contain}
+    #stack-detail .chip-row .tool-chip span,#stack-detail .chip-row .tool-chip-name{font-size:.92rem}

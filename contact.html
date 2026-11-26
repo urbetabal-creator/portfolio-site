@@ -9,7 +9,14 @@
   <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,600&amp;f[]=general-sans@400,500,600&amp;display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="icon" type="image/png" href="assets/favicon.png"/>
   <link rel="stylesheet" href="site.css"/>
+<style id="sparkles-bg-css">
+#sparkles-bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0;transition:opacity 1s ease}
+#sparkles-bg.ready{opacity:1}
+#sparkles-bg canvas{width:100%!important;height:100%!important}
+#aurora-mesh,#ai-lines-canvas{display:none!important}
+</style>
 </head>
 <body>
 <div class="curtain" id="pageCurtain" aria-hidden="true"></div>
@@ -20,15 +27,17 @@
   <div class="aurora-blob b2"></div>
   <div class="aurora-blob b3"></div>
 </div>
+<div id="sparkles-bg" aria-hidden="true"></div>
 <canvas id="ai-lines-canvas" aria-hidden="true"></canvas>
 
 <!-- NAV -->
 <nav id="navbar">
   <a class="nav-logo" href="index.html">
-    <span class="nav-logo-dot"></span>
+    <img class="nav-logo-img" src="assets/logo.png" alt="" width="32" height="32">
     <span class="nav-logo-text">Urbe Tabal Tech-VA</span>
   </a>
   <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
     <li><a href="services.html">Services</a></li>
     <li><a href="stack.html">Stack</a></li>
     <li><a href="work.html">Work</a></li>
@@ -37,10 +46,10 @@
     <li><a href="contact.html" class="active" aria-current="page">Contact</a></li>
   </ul>
   <div class="nav-right">
+    <a href="https://cal.com/urbe-tabal-avs1rh/free-ai-automation-discovery-call" class="nav-cta nav-cta-desktop" target="_blank" rel="noopener noreferrer">Book a Discovery Call</a>
     <button class="theme-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark mode">
       <span class="theme-btn-icon" id="themeIcon">🌙</span>
     </button>
-    <a href="https://cal.com/urbe-tabal-avs1rh/free-ai-automation-discovery-call" class="nav-cta nav-cta-desktop" target="_blank" rel="noopener noreferrer">Book a Discovery Call</a>
     <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -48,6 +57,7 @@
 </nav>
 <div class="nav-mobile-panel" id="navMobilePanel">
   <ul class="nav-mobile-links">
+    <li><a href="index.html">Home</a></li>
     <li><a href="services.html">Services</a></li>
     <li><a href="stack.html">Stack</a></li>
     <li><a href="work.html">Work</a></li>
@@ -323,5 +333,38 @@
 </footer>
 <script src="site.js"></script>
 <script src="press.js"></script>
+<script src="assets/tsparticles.slim.bundle.min.js"></script>
+<script id="sparkles-bg-js">
+(function(){
+  try{
+    if(!window.tsParticles||!window.loadSlim) return;
+    const el=document.getElementById('sparkles-bg');
+    const col=()=>document.documentElement.getAttribute('data-theme')==='light'?'#1e293b':'#ffffff';
+    let cur=null, ready=loadSlim(tsParticles);
+    function start(){
+      return ready.then(()=>tsParticles.load({id:'sparkles-bg-canvas',element:el,options:{
+        background:{color:{value:'transparent'}},
+        fullScreen:{enable:false},
+        fpsLimit:120,detectRetina:true,
+        particles:{
+          number:{value:100,density:{enable:true,width:400,height:400}},
+          color:{value:col()},
+          shape:{type:'circle'},
+          opacity:{value:{min:0.1,max:1},animation:{enable:true,speed:1,sync:false,startValue:'random'}},
+          size:{value:{min:0.6,max:1.4}},
+          move:{enable:true,direction:'none',speed:{min:0.1,max:1},random:false,straight:false,outModes:{default:'out'}}
+        }
+      }})).then(c=>{cur=c;el.classList.add('ready')});
+    }
+    start().catch(e=>console.warn('sparkles failed',e));
+    let last=col();
+    new MutationObserver(()=>{
+      if(col()===last) return; last=col();
+      try{ if(cur) cur.destroy(); }catch(e){}
+      start().catch(e=>console.warn('sparkles failed',e));
+    }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  }catch(e){console.warn('sparkles failed',e)}
+})();
+</script>
 </body>
 </html>
