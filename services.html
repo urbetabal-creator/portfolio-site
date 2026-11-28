@@ -1216,7 +1216,66 @@
 #sparkles-bg canvas{width:100%!important;height:100%!important}
 #aurora-mesh,#ai-lines-canvas{display:none!important}
 </style>
-<style id="crit">.nav-cta,.nav-cta-desktop,.nav-cta-mobile,.nav-mobile-panel .nav-cta{border-radius:999px!important}.nav-mobile-panel:not(.open){visibility:hidden}</style></head>
+<style id="crit">.nav-cta,.nav-cta-desktop,.nav-cta-mobile,.nav-mobile-panel .nav-cta{border-radius:999px!important}.nav-mobile-panel:not(.open){visibility:hidden}</style><style id="footer-legal-css">
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;width:100%;border-top:1px solid var(--border);padding-top:14px}
+.footer-legal{display:flex;flex-wrap:wrap;gap:4px 18px;list-style:none}
+.footer-legal a{display:inline-block;padding:10px 6px;font-size:.78rem;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s}
+.footer-legal a:hover{color:var(--cyan)}
+</style>
+<link rel="stylesheet" href="css/motion.css"/>
+<script src="js/motion-boot.js"></script>
+<style id="sv-motion">
+/* ═══ Services page — motion pass: staggered entrances, scroll-drawn rail, animated card borders, count-up ═══ */
+@property --dc-a{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes dcIn{from{opacity:0;transform:translate3d(0,38px,0) scale(.965);filter:blur(7px)}to{opacity:1;transform:none;filter:none}}
+@keyframes dcHead{from{opacity:0;transform:translate3d(-22px,0,0);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+@keyframes dcSpin{to{--dc-a:360deg}}
+@keyframes dcPulse{0%{box-shadow:0 0 0 0 rgba(0,212,255,.55)}70%,100%{box-shadow:0 0 0 12px rgba(0,212,255,0)}}
+@keyframes dcFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+#services-detail .detail-card.reveal.visible{animation:dcIn .85s cubic-bezier(.2,.8,.2,1) backwards;transition:border-color .25s,background .3s,transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s}
+#services-detail .detail-cards>.detail-card:nth-child(2).reveal.visible{animation-delay:.1s}
+#services-detail .detail-cards>.detail-card:nth-child(3).reveal.visible{animation-delay:.2s}
+#services-detail .detail-cards>.detail-card:nth-child(4).reveal.visible{animation-delay:.3s}
+#services-detail .detail-group>.reveal.visible{animation:dcHead .8s cubic-bezier(.2,.8,.2,1) backwards}
+#services-detail .svc-stats.reveal.visible span{animation:dcIn .7s cubic-bezier(.2,.8,.2,1) backwards}
+#services-detail .svc-stats.reveal.visible span:nth-child(2){animation-delay:.08s}
+#services-detail .svc-stats.reveal.visible span:nth-child(3){animation-delay:.16s}
+#services-detail .svc-stats.reveal.visible span:nth-child(4){animation-delay:.24s}
+
+/* rail: a bright line draws down as you scroll, the node pulses while its group is in view */
+#services-detail .detail-group::before{opacity:1;background:
+  linear-gradient(to bottom,var(--cyan),var(--cyan2)) top/100% calc(var(--rp,0)*100%) no-repeat,
+  linear-gradient(to bottom,transparent,rgba(0,212,255,.22) 12%,rgba(0,212,255,.1) 88%,transparent)}
+#services-detail .detail-group::before{filter:drop-shadow(0 0 6px rgba(0,212,255,.55))}
+#services-detail .detail-group.in-view::after{background:var(--cyan);animation:dcPulse 2.2s ease-out infinite}
+#services-detail .detail-group::after{transition:background .4s}
+#services-detail .detail-kicker{display:inline-flex;align-items:center}
+#services-detail .detail-kicker::before{content:'';display:block;width:0;height:2px;border-radius:2px;background:var(--cyan);margin-right:0;transition:width .8s cubic-bezier(.2,.8,.2,1) .25s,margin-right .8s cubic-bezier(.2,.8,.2,1) .25s}
+#services-detail .detail-group.in-view .detail-kicker::before{width:30px;margin-right:10px}
+
+/* cards: lift + rotating gradient border on hover, accent bar grows, "good fit" slides in */
+#services-detail .detail-card{isolation:isolate}
+#services-detail .detail-card .dc-ring{position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;opacity:0;transition:opacity .35s;z-index:3;
+  background:conic-gradient(from var(--dc-a),transparent 0 62%,var(--cyan) 80%,var(--accent,#F5A97F) 92%,transparent 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);animation:dcSpin 4.5s linear infinite}
+#services-detail .detail-card:hover .dc-ring{opacity:1}
+#services-detail .detail-card:hover{transform:translateY(-6px);box-shadow:0 24px 50px -22px var(--shadow),0 0 0 1px rgba(0,212,255,.12)}
+#services-detail .detail-card h4{transition:color .3s,transform .4s cubic-bezier(.2,.8,.2,1)}
+#services-detail .detail-card:hover h4{color:var(--cyan);transform:translateX(4px)}
+#services-detail .detail-card .fit{transition:transform .4s cubic-bezier(.2,.8,.2,1),border-color .3s}
+#services-detail .detail-card:hover .fit{transform:translateX(4px);border-top-color:rgba(0,212,255,.45)}
+#services-detail .detail-card::after{transition:opacity .35s,transform .6s cubic-bezier(.2,.8,.2,1)}
+#services-detail .detail-card:hover::after{transform:translate(-14px,14px) scale(1.25)}
+#services-detail .svc-stats span b{display:inline-block;min-width:1ch;font-variant-numeric:tabular-nums}
+#services-detail .svc-stats span:hover{border-color:rgba(0,212,255,.45);transform:translateY(-2px);transition:transform .3s,border-color .3s}
+#services-detail .cta-band.reveal.visible{animation:dcIn .9s cubic-bezier(.2,.8,.2,1) backwards}
+@media(prefers-reduced-motion:reduce){
+  #services-detail .detail-card.reveal.visible,#services-detail .detail-group>.reveal.visible,#services-detail .svc-stats.reveal.visible span,#services-detail .cta-band.reveal.visible{animation:none}
+  #services-detail .detail-card .dc-ring,#services-detail .detail-group.in-view::after{animation:none}
+}
+</style>
+</head>
 <body>
 <div class="curtain" id="pageCurtain" aria-hidden="true"></div>
 
@@ -1281,7 +1340,12 @@
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
-  <div class="footer-copy">© 2026 Urbe Tabal Jr. · Built like a workflow — every piece connects.</div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Urbe Tabal Jr. · Built like a workflow — every piece connects.</div>
+    <ul class="footer-legal" aria-label="Legal">
+      <li><a href="privacy.html">Privacy Policy</a></li>
+    </ul>
+  </div>
 </footer>
 <script>// ══════════════════════════════════════
 // AI CIRCUIT BOARD — animated gold PCB-trace background
@@ -2247,6 +2311,55 @@ setTimeout(go,900)})();
       start().catch(e=>console.warn('sparkles failed',e));
     }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
   }catch(e){console.warn('sparkles failed',e)}
+})();
+</script>
+<!-- Motion layer: GSAP + ScrollTrigger + SplitText + Lenis (local copies) -->
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/ScrollTrigger.min.js"></script>
+<script src="js/vendor/SplitText.min.js"></script>
+<script src="js/vendor/lenis.min.js"></script>
+<script src="js/motion.js"></script>
+<script id="sv-motion-js">
+/* Services page motion: rail progress, in-view nodes, hover ring, count-up */
+(function () {
+  var sec = document.getElementById('services-detail');
+  if (!sec) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var groups = Array.prototype.slice.call(sec.querySelectorAll('.detail-group'));
+  Array.prototype.forEach.call(sec.querySelectorAll('.detail-card'), function (c) {
+    var r = document.createElement('span'); r.className = 'dc-ring'; r.setAttribute('aria-hidden', 'true'); c.appendChild(r);
+  });
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  var raf = 0;
+  function update() {
+    raf = 0;
+    var vh = window.innerHeight;
+    groups.forEach(function (g) {
+      var r = g.getBoundingClientRect();
+      var p = clamp((vh * 0.62 - r.top) / Math.max(1, r.height), 0, 1);
+      g.style.setProperty('--rp', p.toFixed(3));
+      g.classList.toggle('in-view', r.top < vh * 0.62 && r.bottom > vh * 0.2);
+    });
+  }
+  function req() { if (!raf) raf = requestAnimationFrame(update); }
+  update();
+  window.addEventListener('scroll', req, { passive: true });
+  window.addEventListener('resize', req);
+
+  // count-up on the stat pills
+  var nums = Array.prototype.slice.call(sec.querySelectorAll('.svc-stats b')).filter(function (b) { return /^\d+$/.test(b.textContent.trim()); });
+  nums.forEach(function (b) { b.dataset.to = b.textContent.trim(); });
+  if (!reduce && 'IntersectionObserver' in window && nums.length) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return; io.unobserve(e.target);
+        var b = e.target, to = +b.dataset.to, t0 = null;
+        function f(t) { if (!t0) t0 = t; var k = Math.min(1, (t - t0) / 1100), v = 1 - Math.pow(1 - k, 3); b.textContent = Math.round(to * v); if (k < 1) requestAnimationFrame(f); else b.textContent = to; }
+        b.textContent = '0'; requestAnimationFrame(f);
+      });
+    }, { threshold: 0.6 });
+    nums.forEach(function (b) { io.observe(b); });
+  }
 })();
 </script>
 </body>

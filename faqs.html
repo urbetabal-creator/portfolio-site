@@ -1217,7 +1217,15 @@
 #sparkles-bg canvas{width:100%!important;height:100%!important}
 #aurora-mesh,#ai-lines-canvas{display:none!important}
 </style>
-<style id="crit">.nav-cta,.nav-cta-desktop,.nav-cta-mobile,.nav-mobile-panel .nav-cta{border-radius:999px!important}.nav-mobile-panel:not(.open){visibility:hidden}</style></head>
+<style id="crit">.nav-cta,.nav-cta-desktop,.nav-cta-mobile,.nav-mobile-panel .nav-cta{border-radius:999px!important}.nav-mobile-panel:not(.open){visibility:hidden}</style><style id="footer-legal-css">
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;width:100%;border-top:1px solid var(--border);padding-top:14px}
+.footer-legal{display:flex;flex-wrap:wrap;gap:4px 18px;list-style:none}
+.footer-legal a{display:inline-block;padding:10px 6px;font-size:.78rem;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s}
+.footer-legal a:hover{color:var(--cyan)}
+</style>
+<link rel="stylesheet" href="css/motion.css"/>
+<script src="js/motion-boot.js"></script>
+</head>
 <body>
 <div class="curtain" id="pageCurtain" aria-hidden="true"></div>
 
@@ -1358,7 +1366,12 @@
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
-  <div class="footer-copy">© 2026 Urbe Tabal Jr. · Built like a workflow — every piece connects.</div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Urbe Tabal Jr. · Built like a workflow — every piece connects.</div>
+    <ul class="footer-legal" aria-label="Legal">
+      <li><a href="privacy.html">Privacy Policy</a></li>
+    </ul>
+  </div>
 </footer>
 <script>// ══════════════════════════════════════
 // AI CIRCUIT BOARD — animated gold PCB-trace background
@@ -2344,5 +2357,11 @@ setTimeout(go,900)})();
   }catch(e){console.warn('sparkles failed',e)}
 })();
 </script>
+<!-- Motion layer: GSAP + ScrollTrigger + SplitText + Lenis (local copies) -->
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/ScrollTrigger.min.js"></script>
+<script src="js/vendor/SplitText.min.js"></script>
+<script src="js/vendor/lenis.min.js"></script>
+<script src="js/motion.js"></script>
 </body>
 </html>

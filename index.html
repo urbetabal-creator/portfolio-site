@@ -1216,7 +1216,270 @@
 #sparkles-bg canvas{width:100%!important;height:100%!important}
 #aurora-mesh,#ai-lines-canvas{display:none!important}
 </style>
-<style id="crit">.nav-cta,.nav-cta-desktop,.nav-cta-mobile,.nav-mobile-panel .nav-cta{border-radius:999px!important}.nav-mobile-panel:not(.open){visibility:hidden}</style></head>
+<style id="crit">.nav-cta,.nav-cta-desktop,.nav-cta-mobile,.nav-mobile-panel .nav-cta{border-radius:999px!important}.nav-mobile-panel:not(.open){visibility:hidden}</style><style id="footer-legal-css">
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;width:100%;border-top:1px solid var(--border);padding-top:14px}
+.footer-legal{display:flex;flex-wrap:wrap;gap:4px 18px;list-style:none}
+.footer-legal a{display:inline-block;padding:10px 6px;font-size:.78rem;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s}
+.footer-legal a:hover{color:var(--cyan)}
+</style>
+<style id="svc-modern">
+/* ═══ Services cards — modern pass: bento layout, animated gradient border, cursor glow, staggered entrance ═══ */
+@property --svc-a{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes svcSpin{to{--svc-a:360deg}}
+@keyframes svcIn{from{opacity:0;filter:blur(8px);transform:translateY(30px) scale(.96)}to{opacity:1;filter:blur(0);transform:none}}
+@keyframes svcIconIn{0%{transform:scale(.5) rotate(-12deg);opacity:0}60%{transform:scale(1.12) rotate(3deg);opacity:1}100%{transform:none}}
+@keyframes svcFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes svcDot{0%,100%{box-shadow:0 0 0 0 currentColor}50%{box-shadow:0 0 0 5px transparent}}
+
+#services .services-grid{counter-reset:svc;gap:22px;grid-auto-flow:row dense}
+#services .svc-card{
+  counter-increment:svc;
+  padding:30px 28px 30px!important;border-radius:22px!important;
+  background:linear-gradient(155deg,color-mix(in srgb,var(--card) 90%,var(--cyan) 10%) 0%,var(--card) 48%)!important;
+  border:1px solid var(--border2)!important;
+  box-shadow:inset 0 1px 0 var(--glass-highlight),0 18px 40px -26px var(--shadow)!important;
+  transition:box-shadow .3s,border-color .3s,background .3s,opacity .6s ease;
+  isolation:isolate;
+}
+#services .svc-card.reveal.visible{animation:svcIn .85s cubic-bezier(.22,1,.36,1) backwards}
+#services .svc-card:nth-child(3n+2).visible{animation-delay:.09s}
+#services .svc-card:nth-child(3n+3).visible{animation-delay:.18s}
+
+/* animated gradient ring on hover */
+#services .svc-card::before{
+  content:''!important;position:absolute!important;inset:0!important;left:0!important;top:0!important;right:0!important;bottom:0!important;
+  width:auto!important;height:auto!important;padding:1.5px;border-radius:inherit;
+  background:conic-gradient(from var(--svc-a),transparent 0 52%,var(--cyan) 72%,var(--accent,#F5A97F) 88%,transparent 100%)!important;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
+  opacity:0!important;transition:opacity .4s;pointer-events:none;z-index:2;
+}
+#services .svc-card:hover::before{opacity:1!important;width:auto!important;animation:svcSpin 3.2s linear infinite}
+#services .svc-card:hover{border-color:transparent!important;box-shadow:inset 0 1px 0 var(--glass-highlight),0 26px 60px -24px rgba(0,212,255,.32)!important}
+
+/* cursor-following glow (layer is injected by the existing script) */
+#services .svc-spotlight{display:block!important;z-index:0;
+  background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),rgba(0,212,255,.16),transparent 62%)!important}
+
+/* big ghost numeral */
+#services .svc-card::after{
+  display:none!important;content:none!important;
+  position:absolute;top:22px!important;bottom:auto;right:24px;
+  font-size:2.4rem;font-weight:800;line-height:1;letter-spacing:-.04em;
+  color:var(--text);opacity:.10;pointer-events:none;z-index:0;
+  transition:opacity .4s,transform .5s cubic-bezier(.22,1,.36,1);
+}
+#services .svc-card:hover::after{opacity:.28;transform:translateY(-3px) scale(1.08)}
+#services .services-grid > .svc-card:first-child::after{top:auto!important;bottom:-6px;right:24px;font-size:5.4rem;opacity:.06}
+#services .services-grid > .svc-card:first-child:hover::after{opacity:.14}
+
+/* icon tile */
+#services .svc-icon{
+  width:56px;height:56px;border-radius:16px;margin-bottom:22px;
+  background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.02));
+  border:1px solid var(--border2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 10px 24px -12px rgba(0,212,255,.45);
+  transition:transform .45s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;
+}
+[data-theme="light"] #services .svc-icon{background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(255,255,255,.6))}
+#services .svc-card.visible .svc-icon{animation:svcIconIn .7s cubic-bezier(.34,1.56,.64,1) .25s backwards}
+#services .svc-card:hover .svc-icon{transform:translateY(-4px) scale(1.08) rotate(-4deg)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 16px 30px -10px rgba(0,212,255,.6)}
+#services .svc-icon svg{width:26px;height:26px}
+
+/* category pill */
+#services .svc-num{
+  display:inline-flex!important;align-items:center;gap:8px;
+  font-size:.74rem!important;font-weight:600!important;letter-spacing:.02em!important;text-transform:none!important;
+  padding:5px 13px 5px 11px!important;border-radius:999px!important;margin-bottom:14px!important;
+  color:var(--cyan2)!important;
+  border:1px solid color-mix(in srgb,currentColor 30%,transparent)!important;
+  background:color-mix(in srgb,currentColor 9%,transparent)!important;
+}
+#services .svc-num[style]{color:#cd8562!important}
+#services .svc-num::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;animation:svcDot 2.4s ease-in-out infinite}
+
+/* type */
+#services .svc-title{font-size:1.28rem;letter-spacing:-.02em;margin-bottom:12px}
+#services .svc-desc{position:relative;z-index:1;max-width:46ch}
+#services .svc-desc strong{color:var(--text)!important;font-weight:600!important}
+#services .svc-card > *:not(.svc-spotlight){z-index:1}
+
+/* featured first card spans two columns */
+#services .services-grid > .svc-card:first-child{
+  grid-column:span 2;padding:36px 36px 34px!important;
+  background:radial-gradient(520px 240px at 88% 0%,rgba(205,133,98,.20),transparent 70%),
+             linear-gradient(155deg,color-mix(in srgb,var(--card) 88%,var(--cyan) 12%) 0%,var(--card) 55%)!important;
+}
+#services .services-grid > .svc-card:first-child .svc-title{font-size:1.7rem}
+#services .services-grid > .svc-card:first-child .svc-desc{font-size:1rem;max-width:56ch}
+#services .services-grid > .svc-card:first-child .svc-icon{width:64px;height:64px;border-radius:18px;animation:svcFloat 5s ease-in-out infinite}
+#services .svc-card > div[style*="position:absolute"]{top:18px!important;right:20px!important;padding:4px 12px!important;font-size:.66rem!important}
+
+@media(max-width:900px){#services .services-grid > .svc-card:first-child{grid-column:span 2}}
+@media(max-width:580px){
+  #services .services-grid > .svc-card:first-child{grid-column:auto;padding:30px 26px!important}
+  #services .services-grid > .svc-card:first-child .svc-title{font-size:1.4rem}
+}
+@media(prefers-reduced-motion:reduce){
+  #services .svc-card,#services .svc-card *,#services .svc-card::before{animation:none!important}
+}
+</style>
+<style id="wf-modern">
+/* ═══ Example Workflow — modern pass: scenario window, connected timeline, sticky live log ═══ */
+@keyframes wfDash{to{background-position:0 12px}}
+@keyframes wfPulse{0%,100%{box-shadow:0 0 0 0 rgba(0,212,255,.45)}50%{box-shadow:0 0 0 9px rgba(0,212,255,0)}}
+@keyframes wfPop{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+
+#workflow .ind-tabs{display:inline-flex;flex-wrap:wrap;gap:4px;padding:5px;margin-bottom:22px;border-radius:999px;border:1px solid var(--border2);background:color-mix(in srgb,var(--card) 80%,transparent)}
+#workflow .ind-tab{border:0;background:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;padding:9px 18px 9px 14px;gap:8px;font-size:.84rem;color:var(--muted);transition:color .2s,background .25s,box-shadow .25s}
+#workflow .ind-tab:hover{transform:none;border:0;color:var(--text);background:color-mix(in srgb,var(--text) 6%,transparent)}
+#workflow .ind-tab.active{color:var(--text);background:linear-gradient(135deg,rgba(0,212,255,.22),rgba(0,212,255,.08));box-shadow:inset 0 0 0 1px rgba(0,212,255,.45),0 6px 20px -8px rgba(0,212,255,.55)}
+#workflow .ind-tab-ico{display:inline-flex;color:var(--cyan)}
+#workflow .ind-tab-ico svg{width:17px;height:17px}
+
+#workflow .wf-stage{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:32px;align-items:start;padding:26px;border-radius:26px;
+  border:1px solid var(--border2);
+  background:radial-gradient(520px 260px at 100% 0%,rgba(0,212,255,.09),transparent 70%),linear-gradient(160deg,color-mix(in srgb,var(--card) 92%,var(--cyan) 8%),var(--card) 55%);
+  box-shadow:inset 0 1px 0 var(--glass-highlight),0 30px 70px -40px var(--shadow)}
+
+/* timeline */
+#workflow .flow-steps{display:flex;flex-direction:column;align-items:stretch;gap:2px;overflow:visible;padding:0;scroll-behavior:auto}
+#workflow .flow-step{flex:none;min-width:0;position:relative;display:grid;grid-template-columns:44px minmax(0,1fr) auto;column-gap:16px;align-items:start;text-align:left;
+  padding:12px 14px;border:1px solid transparent;border-radius:16px;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;
+  transition:background .25s,border-color .25s}
+#workflow .flow-step:hover{transform:none;box-shadow:none;border-color:var(--border);background:color-mix(in srgb,var(--text) 4%,transparent)}
+#workflow .flow-step:not(:last-child)::before{content:'';position:absolute;left:35px;top:58px;bottom:-10px;width:2px;border-radius:2px;background:linear-gradient(to bottom,#22c55e,#4ade80) top/100% 0% no-repeat,linear-gradient(var(--border2),var(--border2)) top/100% 100% no-repeat;z-index:0}
+#workflow .flow-icon{width:44px;height:44px;margin:0;border-radius:13px;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;
+  color:var(--cyan);background:linear-gradient(145deg,color-mix(in srgb,var(--card2) 85%,#fff 15%),var(--card2));border:1px solid var(--border2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07);transition:color .3s,border-color .3s,background .3s,box-shadow .3s}
+#workflow .flow-icon svg{width:22px;height:22px}
+#workflow .flow-body{min-width:0;padding-top:1px}
+#workflow .flow-step-label{font-size:.72rem;letter-spacing:.04em;text-transform:none;font-weight:600;color:var(--muted);margin-bottom:3px}
+#workflow .flow-step-title{font-size:.98rem;font-weight:700;letter-spacing:-.01em;margin-bottom:4px}
+#workflow .flow-step-desc{font-size:.84rem;line-height:1.55;max-width:48ch}
+#workflow .flow-badge{margin-top:3px;font-size:.62rem;padding:4px 10px;align-self:start}
+#workflow .flow-arrow{display:none}
+
+#workflow .flow-step.pg-active{transform:none;background:linear-gradient(90deg,rgba(0,212,255,.10),rgba(0,212,255,.02));border-color:rgba(0,212,255,.38);box-shadow:none}
+#workflow .flow-step.pg-active .flow-icon{animation:wfPulse 1.4s ease-out infinite;color:#06131f;background:linear-gradient(145deg,var(--cyan2),var(--cyan));border-color:transparent}
+#workflow .flow-step.pg-done{background:transparent;border-color:transparent}
+#workflow .flow-step.pg-done .flow-icon{color:#4ade80;border-color:rgba(34,197,94,.55);background:rgba(34,197,94,.10);animation:none}
+#workflow .flow-step.pg-active:not(:last-child)::before,#workflow .flow-step.pg-done:not(:last-child)::before{background-size:100% 100%,100% 100%;transition:background-size var(--fill,700ms) linear}
+#workflow .flow-step.pg-done::after{top:8px;bottom:auto;left:46px;right:auto;margin:0;width:16px;height:16px;font-size:.55rem;border:2px solid var(--card);z-index:2}
+
+/* run panel + console */
+#workflow .wf-side{position:sticky;top:96px}
+#workflow .pg-panel{margin-top:0;display:flex;flex-direction:column;gap:18px}
+#workflow .pg-panel-left{flex-direction:column;align-items:stretch;gap:12px}
+#workflow .pg-run-btn{padding:16px 22px;border-radius:999px;font-size:.95rem;background:linear-gradient(135deg,var(--cyan2),var(--cyan));box-shadow:0 14px 30px -14px rgba(0,212,255,.8)}
+#workflow .pg-hint{font-size:.82rem;line-height:1.6}
+#workflow .pg-console{border-radius:18px;border:1px solid rgba(255,255,255,.09);background:#070a12;box-shadow:0 24px 50px -24px rgba(0,0,0,.7)}
+#workflow .pg-console-head{padding:12px 16px;background:rgba(255,255,255,.035)}
+#workflow .pg-console-title{font-size:.74rem;color:#7c8aa0}
+#workflow .pg-console-body{min-height:300px;max-height:360px;padding:18px 20px;font-size:.82rem;line-height:1.85;
+  background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px);background-size:100% 26px}
+#workflow .pg-console-line{color:#a8ecff}
+#workflow .pg-console-line.pg-console-idle{color:#64748b}
+#workflow .pg-console-line .pg-ts{color:#5b6b82}
+#workflow .pg-result{margin-top:16px}
+#workflow .pg-result.show{max-height:320px;border-radius:14px;align-items:flex-start}
+#workflow .ind-attrib{margin-top:16px;color:var(--muted);font-size:.8rem}
+
+/* trust strip */
+#workflow .pg-trust{margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--border2);border-radius:20px;overflow:hidden;background:color-mix(in srgb,var(--card) 70%,transparent)}
+#workflow .pg-trust-item{border:0;border-radius:0;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;padding:22px 24px;gap:16px;align-items:flex-start;transition:background .25s}
+#workflow .pg-trust-item:hover{transform:none;background:color-mix(in srgb,var(--text) 4%,transparent)}
+#workflow .pg-trust-item + .pg-trust-item{border-left:1px solid var(--border2)}
+#workflow .pg-trust-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--cyan);background:rgba(0,212,255,.10);border:1px solid rgba(0,212,255,.25);font-size:0}
+#workflow .pg-trust-icon svg{width:20px;height:20px}
+#workflow .pg-trust-title{font-size:.95rem}
+#workflow .pg-trust-sub{font-size:.84rem;line-height:1.55}
+
+@media(max-width:900px){
+  #workflow .wf-stage{grid-template-columns:1fr;padding:18px;gap:24px}
+  #workflow .wf-side{position:static;order:-1}
+  #workflow .pg-trust{grid-template-columns:1fr}
+  #workflow .pg-trust-item + .pg-trust-item{border-left:0;border-top:1px solid var(--border2)}
+}
+@media(max-width:580px){
+  #workflow .flow-step{grid-template-columns:40px minmax(0,1fr);padding:12px 8px}
+  #workflow .flow-icon{width:40px;height:40px}
+  #workflow .flow-badge{grid-column:2;justify-self:start;margin-top:6px}
+  #workflow .flow-step:not(:last-child)::before{left:27px}
+  #workflow .ind-tabs{display:flex;border-radius:22px}
+  #workflow .pg-console-body{min-height:240px}
+}
+@media(prefers-reduced-motion:reduce){#workflow .flow-step *,#workflow .flow-step::before{animation:none!important}}
+</style>
+<link rel="stylesheet" href="css/motion.css"/>
+<link rel="stylesheet" href="css/index-design.css"/>
+<script src="js/motion-boot.js"></script>
+<style id="svc-fs-css">
+/* ═══ What I Build — full-screen scroll story (progressive enhancement; built by JS) ═══ */
+#services.svc-fs-off{display:none}
+.svc-fs{position:relative;z-index:5}
+.svc-fs-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--bg);isolation:isolate}
+.svc-fs-pin::before{content:'';position:absolute;inset:0;z-index:-2;
+  background:radial-gradient(900px 560px at 78% 30%,rgba(0,212,255,.13),transparent 70%),
+             radial-gradient(700px 520px at 12% 88%,rgba(245,169,127,.09),transparent 70%)}
+.svc-fs-pin::after{content:'';position:absolute;inset:0;z-index:-1;opacity:.5;pointer-events:none;
+  background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse at 60% 45%,#000 10%,transparent 72%);mask-image:radial-gradient(ellipse at 60% 45%,#000 10%,transparent 72%)}
+
+.fs-slide{position:absolute;inset:0;display:flex;align-items:center;padding:0 9vw 0 8vw;
+  opacity:var(--o,0);transform:translate3d(0,var(--y,0px),0) scale(var(--s,1));
+  will-change:transform,opacity;contain:layout style;pointer-events:none;visibility:hidden}
+.fs-slide.on{visibility:visible}
+.fs-slide.act{pointer-events:auto}
+.fs-body{position:relative;max-width:1100px;width:100%;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:5vw;align-items:center}
+.fs-copy{position:relative;z-index:2;min-width:0}
+.fs-kicker{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);
+  transform:translateY(calc(var(--t,0)*-26px))}
+.fs-kicker i{display:block;width:34px;height:2px;border-radius:2px;background:currentColor}
+.fs-title{font-family:'Inter',sans-serif;font-weight:800;letter-spacing:-.035em;line-height:1.03;margin:18px 0 0;color:var(--text);
+  font-size:clamp(2.1rem,5.4vw,4.6rem);transform:translateY(calc(var(--t,0)*-60px))}
+.fs-desc{margin:24px 0 0;max-width:34em;color:var(--muted);font-size:clamp(1rem,1.5vw,1.28rem);line-height:1.65;transform:translateY(calc(var(--t,0)*-96px))}
+.fs-desc strong{color:var(--text);font-weight:600}
+.fs-art{position:relative;aspect-ratio:1;max-height:56vh;width:100%;display:grid;place-items:center;transform:translateY(calc(var(--t,0)*-40px)) rotate(calc(var(--t,0)*6deg))}
+.fs-art::before{content:'';position:absolute;inset:6%;border-radius:36%;border:1px solid var(--border2);
+  background:linear-gradient(150deg,color-mix(in srgb,var(--card) 90%,var(--cyan) 10%),var(--card));box-shadow:0 40px 90px -40px var(--shadow),inset 0 1px 0 var(--glass-highlight)}
+.fs-art::after{content:'';position:absolute;inset:-4%;border-radius:40%;border:1px dashed var(--border2);opacity:.6;animation:fsSpin 38s linear infinite}
+.fs-ico{position:relative;z-index:1;width:46%;aspect-ratio:1;display:grid;place-items:center;color:var(--cyan)}
+.fs-ico img,.fs-ico svg{width:100%!important;height:100%!important;max-width:100%;object-fit:contain;filter:drop-shadow(0 14px 28px rgba(0,212,255,.25))}
+.fs-ico svg{stroke-width:1.4}
+.fs-ico .em-ico{font-size:clamp(4.5rem,11vw,8.5rem)!important;filter:drop-shadow(0 14px 28px rgba(0,212,255,.25))}
+.fs-ghost{position:absolute;right:-1vw;bottom:-6vh;z-index:0;font-family:'Inter',sans-serif;font-weight:800;line-height:.8;letter-spacing:-.06em;font-size:clamp(9rem,28vw,24rem);
+  color:transparent;-webkit-text-stroke:1.5px color-mix(in srgb,var(--text) 10%,transparent);transform:translateY(calc(var(--t,0)*-170px));user-select:none;pointer-events:none}
+.fs-intro .fs-title{font-size:clamp(2.4rem,6.4vw,5.8rem)}
+.fs-intro .fs-body{grid-template-columns:minmax(0,1fr)}
+.fs-hint{margin-top:38px;display:inline-flex;align-items:center;gap:12px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.fs-hint b{display:block;width:22px;height:36px;border:1.5px solid var(--border2);border-radius:14px;position:relative}
+.fs-hint b::after{content:'';position:absolute;left:50%;top:7px;width:3px;height:7px;margin-left:-1.5px;border-radius:3px;background:var(--cyan);animation:fsWheel 1.6s ease-in-out infinite}
+
+.fs-rail{position:absolute;right:max(14px,2.2vw);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:5}
+.fs-dot{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--dim);background:transparent;padding:0;cursor:pointer;transition:transform .3s,background .3s,border-color .3s,height .3s}
+.fs-dot.on{background:var(--cyan);border-color:var(--cyan);height:26px;border-radius:8px}
+.fs-dot:hover{border-color:var(--cyan)}
+.fs-count{position:absolute;left:8vw;bottom:5vh;z-index:5;font-family:'Inter',sans-serif;font-weight:700;font-size:.95rem;letter-spacing:.08em;color:var(--muted);display:flex;align-items:center;gap:14px}
+.fs-count em{font-style:normal;color:var(--text)}
+.fs-bar{display:block;width:clamp(90px,14vw,190px);height:2px;border-radius:2px;background:var(--border2);overflow:hidden}
+.fs-bar i{display:block;height:100%;width:100%;transform-origin:left;transform:scaleX(var(--p,0));background:linear-gradient(90deg,var(--cyan),var(--accent))}
+.fs-kicker,.fs-title,.fs-desc,.fs-art,.sf-use,.sf-tile{will-change:transform}
+@keyframes fsSpin{to{transform:rotate(360deg)}}
+@keyframes fsWheel{0%{transform:translateY(0);opacity:1}70%{transform:translateY(11px);opacity:0}100%{opacity:0}}
+@media(max-width:820px){
+  .fs-slide{padding:0 7vw}
+  .fs-body{grid-template-columns:minmax(0,1fr);gap:3vh;align-content:center}
+  .fs-art{order:-1;max-height:22vh;width:auto;aspect-ratio:1;margin:0}
+  .fs-ghost{font-size:46vw;right:-4vw;bottom:-2vh}
+  .fs-count{left:7vw;bottom:3.5vh}
+  .fs-rail{right:8px;gap:8px}
+  .fs-title{font-size:clamp(1.9rem,8.4vw,2.8rem)}
+  .fs-desc{font-size:1rem;margin-top:16px}
+}
+@media(prefers-reduced-motion:reduce){.fs-art::after,.fs-hint b::after{animation:none}}
+</style>
+</head>
 <body>
 <div class="curtain" id="pageCurtain" aria-hidden="true"></div>
 
@@ -1317,14 +1580,13 @@
         <div class="svc-icon"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNTYiIGhlaWdodD0iMjU2IiB2aWV3Qm94PSIwIDAgMzIgMzIiIGZpbGw9IiMwMEQ0RkYiPjxwYXRoIGZpbGw9IiMwMEQ0RkYiIGQ9Ik0yNCAyNmEzIDMgMCAxIDAtMi44MTYtNEgxM3YxYTUgNSAwIDEgMS01LTV2LTJhNyA3IDAgMSAwIDYuOTI5IDhoNi4yNTVBMi45OTEgMi45OTEgMCAwIDAgMjQgMjZaIi8+PHBhdGggZmlsbD0iIzAwRDRGRiIgZD0iTTI0IDE2YTcuMDI0IDcuMDI0IDAgMCAwLTIuNTcuNDg3bC0zLjE2Ni01LjU0YTMuMDQ3IDMuMDQ3IDAgMSAwLTEuNzMyIDFsNC4xMTkgNy4yMDhsLjg2OC0uNDk4YTUgNSAwIDEgMS0xLjg1IDYuODQybC0xLjczMiAxLjAwMkE3IDcgMCAxIDAgMjQgMTZaIi8+PHBhdGggZmlsbD0iIzAwRDRGRiIgZD0iTTguNTMyIDIwLjA1NGEzLjAzIDMuMDMgMCAxIDAgMS43MzMuOTk4bDMuNjI1LTYuMzQ0bC40OTgtLjg2OGwtLjg2OC0uNDk3YTUgNSAwIDEgMSA2LjgxMi0xLjg0NGwxLjczMSAxLjAwMmE3IDcgMCAxIDAtMTAuMzQ2IDIuMDM2Yy0uNDU3Ljc0Mi0xLjEwMiAxLjg3MS0yLjA3MyAzLjU3MloiLz48L3N2Zz4=" alt="Webhook" style="width:28px;height:28px;object-fit:contain;display:block;"/></div>
         <div class="svc-num">Integration</div><div class="svc-title">API &amp; Webhook Integrations</div><p class="svc-desc"><strong>Bridge platforms that don't talk to each other</strong> — secure API keys, custom webhooks, payload mapping and error handling for real-time data flow.</p>
       </div>
-      <div class="svc-card reveal" style="transition-delay:0.05s"><div class="svc-icon">📊</div><div class="svc-num">Data</div><div class="svc-title">Lead Gen Formatting &amp; Organization</div><p class="svc-desc">Lead capture that <strong>cleans, formats, tags and routes</strong> every lead into the right CRM field — automatically.</p></div>
-      <div class="svc-card reveal" style="transition-delay:0.1s"><div class="svc-icon">🗂️</div><div class="svc-num">Ops</div><div class="svc-title">Project &amp; Task Management Setup</div><p class="svc-desc">Notion workspaces and Asana boards wired to your automations, so <strong>tasks create themselves</strong> and your team always knows what's next.</p></div>
+      <div class="svc-card reveal" style="transition-delay:0.05s"><div class="svc-icon"><span class="em-ico" role="img" aria-label="File cabinet" style="font-size:26px;line-height:1">🗃️</span></div><div class="svc-num">Ops</div><div class="svc-title">Project &amp; Task Management Setup</div><p class="svc-desc">Notion workspaces and Asana boards wired to your automations, so <strong>tasks create themselves</strong> and your team always knows what's next.</p></div>
       <div class="svc-card reveal" style="transition-delay:0.15s">
         <div class="svc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00D4FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
         <div class="svc-num">Audit</div><div class="svc-title">Workflow Audit &amp; Optimization</div><p class="svc-desc">Automations running slow or breaking? I <strong>find the bottlenecks</strong> and rebuild them for reliability and speed.</p>
       </div>
       <div class="svc-card reveal" style="transition-delay:0.05s"><div class="svc-icon"><img src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjRUE0MzM1IiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+R21haWw8L3RpdGxlPjxwYXRoIGQ9Ik0yNCA1LjQ1N3YxMy45MDljMCAuOTA0LS43MzIgMS42MzYtMS42MzYgMS42MzZoLTMuODE5VjExLjczTDEyIDE2LjY0bC02LjU0NS00LjkxdjkuMjczSDEuNjM2QTEuNjM2IDEuNjM2IDAgMCAxIDAgMTkuMzY2VjUuNDU3YzAtMi4wMjMgMi4zMDktMy4xNzggMy45MjctMS45NjRMNS40NTUgNC42NCAxMiA5LjU0OGw2LjU0NS00LjkxIDEuNTI4LTEuMTQ1QzIxLjY5IDIuMjggMjQgMy40MzQgMjQgNS40NTd6Ii8+PC9zdmc+" alt="Gmail" style="width:28px;height:28px;object-fit:contain;display:block;"/></div><div class="svc-num">Nurture</div><div class="svc-title">Email Nurture Automation</div><p class="svc-desc"><strong>Follow-ups that never forget</strong> — triggered emails, drip campaigns and behavior-based sends that keep prospects warm.</p></div>
-      <div class="svc-card reveal" style="transition-delay:0.1s"><div class="svc-icon">🗃️</div><div class="svc-num">CRM</div><div class="svc-title">CRM Systems Setup</div><p class="svc-desc">Custom fields, pipelines and automations <strong>shaped around how your team actually sells</strong> — on the CRM platform you use.</p></div>
+      <div class="svc-card reveal" style="transition-delay:0.1s"><div class="svc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/><path d="M4 11.5v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></div><div class="svc-num">CRM</div><div class="svc-title">CRM Systems Setup</div><p class="svc-desc">Custom fields, pipelines and automations <strong>shaped around how your team actually sells</strong> — on the CRM platform you use.</p></div>
     </div>
   </div>
 </section>
@@ -1333,51 +1595,54 @@
   <div class="flow-wrap" style="padding:100px 6%">
     <p class="section-label reveal">Example Workflow</p>
     <h2 class="section-heading reveal">Pick your industry — watch the automation<br>built for it run live</h2>
-    <p class="section-sub reveal">One platform, five industries. Every scenario below — from the trigger to the AI step to the final CRM sync — runs entirely on Make.com, so you're never stuck waiting on multiple tools or vendors to talk to each other.</p>
+    <p class="section-sub reveal">Five industries, one n8n-first stack. Every scenario below — from the webhook trigger, through the AI agent steps, to logging in Google Sheets, an HTTP request into GoHighLevel, the webhook back to n8n, and the contact field update — is built mainly on n8n, with Make.com or Zapier only where they fit.</p>
 
     <div class="ind-tabs reveal" id="indTabs"></div>
 
-    <div class="flow-steps reveal" id="pgSteps"></div>
-
-    <div class="pg-panel reveal">
-      <div class="pg-panel-left">
-        <button class="pg-run-btn" id="pgRunBtn">
-          <span id="pgRunLabel">▶ Run this automation live</span>
-        </button>
-        <p class="pg-hint">This isn't a video — it's a real step-by-step replay of the logic above, timed the way it actually runs.</p>
-      </div>
-      <div class="pg-console" id="pgConsole">
-        <div class="pg-console-head">
-          <span class="pg-dot" style="background:#ff5f57"></span>
-          <span class="pg-dot" style="background:#febc2e"></span>
-          <span class="pg-dot" style="background:#28c840"></span>
-          <span class="pg-console-title">automation.log</span>
+    <div class="wf-stage reveal">
+      <div class="wf-timeline"><div class="flow-steps" id="pgSteps"></div></div>
+      <div class="wf-side">
+        <div class="pg-panel">
+          <div class="pg-panel-left">
+            <button class="pg-run-btn" id="pgRunBtn">
+              <span id="pgRunLabel">▶ Run this automation live</span>
+            </button>
+            <p class="pg-hint">This isn't a video — it's a real step-by-step replay of the logic above, timed the way it actually runs.</p>
+          </div>
+          <div class="pg-console" id="pgConsole">
+            <div class="pg-console-head">
+              <span class="pg-dot" style="background:#ff5f57"></span>
+              <span class="pg-dot" style="background:#febc2e"></span>
+              <span class="pg-dot" style="background:#28c840"></span>
+              <span class="pg-console-title">automation.log</span>
+            </div>
+            <div class="pg-console-body" id="pgConsoleBody">
+              <div class="pg-console-line pg-console-idle">// waiting for trigger — click "Run this automation live"</div>
+            </div>
+          </div>
         </div>
-        <div class="pg-console-body" id="pgConsoleBody">
-          <div class="pg-console-line pg-console-idle">// waiting for trigger — click "Run this automation live"</div>
-        </div>
+        <div class="pg-result" id="pgResult"></div>
       </div>
     </div>
-    <div class="pg-result" id="pgResult"></div>
     <p class="ind-attrib" id="indAttrib"></p>
 
     <div class="pg-trust reveal">
       <div class="pg-trust-item">
-        <span class="pg-trust-icon">🔍</span>
+        <span class="pg-trust-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="m8.8 12 2.2 2.2 4.2-4.4"/></svg></span>
         <div>
           <div class="pg-trust-title">Validated at every step</div>
           <div class="pg-trust-sub">Duplicate checks and error handling run before anything gets tagged or synced</div>
         </div>
       </div>
       <div class="pg-trust-item">
-        <span class="pg-trust-icon">📝</span>
+        <span class="pg-trust-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14.5 3v5H19M9 13h7M9 17h5"/></svg></span>
         <div>
           <div class="pg-trust-title">Every AI decision is logged</div>
           <div class="pg-trust-sub">Tags, scores, and summaries are traceable — nothing happens silently in a black box</div>
         </div>
       </div>
       <div class="pg-trust-item">
-        <span class="pg-trust-icon">🛟</span>
+        <span class="pg-trust-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.5"/><path d="m6 6 3.5 3.5M18 6l-3.5 3.5M6 18l3.5-3.5M18 18l-3.5-3.5"/></svg></span>
         <div>
           <div class="pg-trust-title">Built to fail safe</div>
           <div class="pg-trust-sub">If something looks uncertain, it's flagged for your review instead of guessing</div>
@@ -1624,7 +1889,12 @@
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
-  <div class="footer-copy">© 2026 Urbe Tabal Jr. · Built like a workflow — every piece connects.</div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Urbe Tabal Jr. · Built like a workflow — every piece connects.</div>
+    <ul class="footer-legal" aria-label="Legal">
+      <li><a href="privacy.html">Privacy Policy</a></li>
+    </ul>
+  </div>
 </footer>
 <script>// ══════════════════════════════════════
 // AI CIRCUIT BOARD — animated gold PCB-trace background
@@ -1808,6 +2078,7 @@
     running = !document.hidden;
     if (running && !reduceMotion) requestAnimationFrame(draw);
   });
+  window.__circuitPause = function (p) { if (p) { running = false; } else if (!running) { running = true; if (!reduceMotion) requestAnimationFrame(draw); } };
 })();
 
 // ══════════════════════════════════════
@@ -2127,24 +2398,34 @@ if (navBurger && navMobilePanel) {
       tab: '🛒 E-commerce',
       badge: 'Recovered Cart',
       steps: [
-        { icon: '🛒', label: 'Trigger', title: 'Cart Abandoned', desc: 'Make.com watches the store and catches the checkout drop-off 20 minutes later', badge: 'trigger' },
-        { icon: '🔎', label: 'Step 01', title: 'Cart Data Formatted', desc: 'Make.com cleans email, items, and cart value into one payload', badge: 'action' },
-        { icon: '🤖', label: 'Step 02', title: 'AI Writes Follow-up', desc: 'Make.com AI Agent (Claude) drafts a personalized recovery email', badge: 'action' },
-        { icon: '<svg viewBox="0 0 24 24" width="26" height="26" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto" fill="#EA4335"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>', label: 'Step 03', title: 'Email Queued', desc: 'Sent through Gmail, orchestrated by Make.com', badge: 'action' },
-        { icon: '📊', label: 'Step 04', title: 'Logged to Sheet', desc: 'Make.com appends the recovery attempt to Google Sheets', badge: 'action' },
-        { icon: '✅', label: 'Done', title: 'Team Notified', desc: 'Make.com pings Slack if cart value is over $200', badge: 'done' }
+        { icon: '🛒', label: 'Trigger', title: 'Cart Abandoned', desc: 'n8n webhook catches the checkout drop-off 20 minutes later', badge: 'trigger' },
+        { icon: '🔎', label: 'Step 01', title: 'Cart Data Formatted', desc: 'n8n cleans email, items, and cart value into one payload', badge: 'action' },
+        { icon: '🤖', label: 'Step 02', title: 'AI Agent Qualifies', desc: 'AI agent (Claude) scores recovery likelihood and sets a cart-value tier', badge: 'action' },
+        { icon: '🤖', label: 'Step 03', title: 'AI Agent Matches Offer', desc: 'Matches the cart items to the best-fit offer from your product sheet', badge: 'action' },
+        { icon: '<svg viewBox="0 0 24 24" width="26" height="26" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto" fill="#EA4335"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>', label: 'Step 04', title: 'Email Queued', desc: 'Personalized recovery email sent through the n8n Gmail node', badge: 'action' },
+        { icon: '📈', label: 'Step 05', title: 'Logged to Sheets', desc: 'n8n appends the recovery attempt to the Google Sheets log', badge: 'action' },
+        { icon: '🔗', label: 'Step 06', title: 'HTTP Request to GoHighLevel', desc: 'n8n upserts the contact in GoHighLevel through the API with the cart details', badge: 'action' },
+        { icon: '🔁', label: 'Step 07', title: 'GHL Webhook Back to n8n', desc: 'GoHighLevel fires a webhook when the shopper opens or replies, and n8n picks it up', badge: 'action' },
+        { icon: '🤖', label: 'Step 08', title: 'AI Agent Tags Customer', desc: 'Tags the contact: returning, high-value, discount-sensitive', badge: 'action' },
+        { icon: '✏️', label: 'Step 09', title: 'Contact Fields Updated', desc: 'n8n updates the GHL custom fields: recovery status, cart value, last offer', badge: 'action' },
+        { icon: '✅', label: 'Done', title: 'Team Notified', desc: 'n8n pings Slack if cart value is over $200', badge: 'done' }
       ],
       logLines: [
-        'Trigger fired → cart abandoned 20 minutes ago ($214.50, 3 items) via Make.com',
-        'Make.com → payload formatted: email ✓  3 items ✓  cart value ✓',
-        'Make.com AI Agent (Claude) → drafting recovery email... tone: friendly, 10% offer included',
-        'Gmail → email queued, send-time optimized for 6:00 PM local',
-        'Make.com → row appended to "Cart Recovery Log" in Google Sheets',
-        'Make.com → Slack #sales notified: high-value cart ($214.50) recovery sent'
+        'Trigger fired → n8n webhook caught cart abandoned 20 minutes ago ($214.50, 3 items)',
+        'n8n → payload formatted: email ✓  3 items ✓  cart value ✓',
+        'AI Agent (Claude) → qualified: recovery likelihood 78%, tier "high-value"',
+        'AI Agent → matched best offer: 10% off + matching add-on from "Product Catalog" sheet',
+        'n8n Gmail node → personalized email queued, send-time optimized for 6:00 PM local',
+        'n8n → row appended to "Cart Recovery Log" in Google Sheets',
+        'n8n HTTP Request → POST /contacts/upsert to GoHighLevel, 200 OK',
+        'GoHighLevel → webhook "email.opened" received back in n8n',
+        'AI Agent → GoHighLevel tags added: returning-customer, high-value, discount-sensitive',
+        'n8n HTTP Request → PUT contact custom fields: recovery_status, cart_value, last_offer',
+        'n8n → Slack #sales notified: high-value cart ($214.50) recovery in progress'
       ],
-      result: 'data formatted by Make.com, an AI-personalized recovery email drafted and sent via Gmail, and everything logged — with zero manual follow-up.',
-      stepDelay: 650,
-      aiExtra: 1500
+      result: 'the cart was qualified and matched by an AI agent, emailed and logged to Sheets, synced to GoHighLevel over HTTP, picked up again by webhook, and the contact fields updated — with zero manual follow-up.',
+      stepDelay: 600,
+      aiExtra: 900
     },
     {
       id: 'coaching',
@@ -2152,34 +2433,36 @@ if (navBurger && navMobilePanel) {
       badge: 'Discovery Call',
       noTimer: true,
       steps: [
-        { icon: '📋', label: 'Trigger', title: 'Application Submitted', desc: 'Make.com watches the form and catches the discovery call submission', badge: 'trigger' },
-        { icon: '🔎', label: 'Step 01', title: 'Answers Formatted', desc: 'Make.com parses goals, budget, and timeline from the form', badge: 'action' },
-        { icon: '🤖', label: 'Step 02', title: 'AI Fit Score', desc: 'Make.com AI Agent (Claude) scores lead fit against your ideal client profile', badge: 'action' },
-        { icon: '📞', label: 'Step 03', title: 'AI Voice Call Placed', desc: 'Vapi voice agent calls the prospect to confirm interest and availability', badge: 'action' },
-        { icon: '{}', label: 'Step 04', title: 'Call Outcome Checked', desc: 'IF the prospect confirms on the call → continue to booking. IF not → log the outcome and end.', badge: 'condition' },
-        { icon: '📊', label: 'Step 05', title: 'Logged in GoHighLevel', desc: 'Prospect added to your GHL pipeline with an AI summary', badge: 'action' },
-        { icon: '📅', label: 'Step 06', title: 'Call Auto-Booked', desc: 'GoHighLevel calendar link sent, high-fit leads prioritized', badge: 'action' },
-        { icon: '📈', label: 'Step 07', title: 'Logged to Sheets', desc: 'Prospect appended to a Google Sheets pipeline tracker for reporting', badge: 'action' },
-        { icon: '🗒️', label: 'Step 08', title: 'Logged to Notion', desc: 'Call summary and AI notes saved to your Notion client database', badge: 'action' },
-        { icon: '📌', label: 'Step 09', title: 'Task Assigned', desc: 'Make.com creates an Asana task — "Prep call notes" — assigned to you', badge: 'action' },
-        { icon: '✅', label: 'Done', title: 'Coach Notified', desc: 'Make.com pings Slack with the AI summary before the call', badge: 'done' }
+        { icon: '📋', label: 'Trigger', title: 'Application Submitted', desc: 'n8n webhook catches the discovery call form submission', badge: 'trigger' },
+        { icon: '🔎', label: 'Step 01', title: 'Answers Formatted', desc: 'n8n parses goals, budget, and timeline from the form', badge: 'action' },
+        { icon: '🤖', label: 'Step 02', title: 'AI Agent Qualifies and Tags', desc: 'AI agent (Claude) scores fit against your ideal client profile and tags the lead by program and intent', badge: 'action' },
+        { icon: '📈', label: 'Step 03', title: 'Logged to Sheets', desc: 'n8n appends the application and fit score to your Google Sheets tracker', badge: 'action' },
+        { icon: '🔗', label: 'Step 04', title: 'HTTP Request to GoHighLevel', desc: 'n8n creates the contact and pipeline card in GoHighLevel through the API', badge: 'action' },
+        { icon: '📞', label: 'Step 05', title: 'AI Voice Call Placed', desc: 'Vapi voice agent calls the prospect to confirm interest and availability', badge: 'action' },
+        { icon: '{}', label: 'Step 06', title: 'Call Outcome Checked', desc: 'IF the prospect confirms on the call → continue to booking. IF not → log the outcome and end.', badge: 'condition' },
+        { icon: '🤖', label: 'Step 07', title: 'AI Agent Finds a Slot', desc: 'Searches your calendar and matches the prospect to the best open call time', badge: 'action' },
+        { icon: '📅', label: 'Step 08', title: 'Call Booked', desc: 'GoHighLevel books the appointment and sends the confirmation', badge: 'action' },
+        { icon: '🔁', label: 'Step 09', title: 'GHL Webhook Back to n8n', desc: 'GoHighLevel fires an appointment-booked webhook and n8n picks it up', badge: 'action' },
+        { icon: '✏️', label: 'Step 10', title: 'Contact Fields Updated', desc: 'n8n updates the GHL contact fields with the call notes, booking time, and AI summary', badge: 'action' },
+        { icon: '✅', label: 'Done', title: 'Coach Notified', desc: 'n8n pings Slack with the AI summary before the call', badge: 'done' }
       ],
       logLines: [
-        'Trigger fired → new discovery call application received via Make.com',
-        'Make.com → parsed: goal ✓  budget ✓  timeline ✓',
-        'Make.com AI Agent (Claude) → scoring fit against ICP... match: 91/100, "high intent"',
+        'Trigger fired → n8n webhook received a new discovery call application',
+        'n8n → parsed: goal ✓  budget ✓  timeline ✓',
+        'AI Agent (Claude) → qualified 91/100, "high intent", tags: 1:1-program, budget-confirmed',
+        'n8n → row appended to "Discovery Pipeline" in Google Sheets',
+        'n8n HTTP Request → POST /contacts/ and /opportunities/ to GoHighLevel, 200 OK',
         'Vapi → AI voice call placed... prospect confirmed availability and interest',
         'IF confirmed on call → TRUE → continuing to booking (ELSE branch would log & end here)',
-        'GoHighLevel → prospect card created in pipeline with AI notes',
-        'GoHighLevel calendar → priority slot booked for Thursday 10:00 AM',
-        'Make.com → prospect logged to Google Sheets "Pipeline Tracker"',
-        'Make.com → call summary logged to Notion client database',
-        'Make.com → Asana task "Prep call notes" assigned to coach',
-        'Make.com → Slack notified with 2-line AI summary before the call'
+        'AI Agent → checked calendar, matched Thursday 10:00 AM (prospect timezone ✓)',
+        'GoHighLevel → appointment booked, confirmation sent to the prospect',
+        'GoHighLevel → webhook "appointment.booked" received back in n8n',
+        'n8n HTTP Request → PUT contact fields: call_notes, booked_time, ai_summary',
+        'n8n → Slack: AI summary posted ahead of the Thursday call'
       ],
-      result: 'the application was scored for fit by AI, confirmed live over an automated Vapi call, and routed by a simple IF/ELSE check — confirmed prospects get booked, logged to Sheets and Notion, and prepped for you in Asana automatically; anything unconfirmed gets logged instead of filling your calendar with a no-show.',
-      stepDelay: 700,
-      aiExtra: 2000
+      result: 'the application was qualified and tagged by an AI agent, logged to Sheets and synced to GoHighLevel over HTTP, confirmed live over a Vapi call, routed by a simple IF/ELSE check, booked, and sent back to n8n by webhook to update the contact fields.',
+      stepDelay: 600,
+      aiExtra: 900
     },
     {
       id: 'realestate',
@@ -2187,93 +2470,109 @@ if (navBurger && navMobilePanel) {
       badge: 'Buyer Inquiry',
       noTimer: true,
       steps: [
-        { icon: '🏠', label: 'Trigger', title: 'New Inquiry Captured', desc: 'Make.com watches the listing page and catches the buyer inquiry', badge: 'trigger' },
-        { icon: '🔎', label: 'Step 01', title: 'Contact Formatted', desc: 'Make.com parses name, phone, and listing ID', badge: 'action' },
-        { icon: '🤖', label: 'Step 02', title: 'AI Qualifies Lead', desc: 'Make.com AI Agent (Claude) reads the message for budget & urgency', badge: 'action' },
-        { icon: '📞', label: 'Step 03', title: 'AI Voice Call Placed', desc: 'Vapi voice agent calls the buyer to confirm interest and showing time', badge: 'action' },
-        { icon: '{}', label: 'Step 04', title: 'Call Outcome Checked', desc: 'IF the buyer confirms on the call → continue to booking. IF not → log the outcome and end.', badge: 'condition' },
-        { icon: '📊', label: 'Step 05', title: 'Synced to GoHighLevel', desc: 'Contact created in GoHighLevel, tagged by property type', badge: 'action' },
-        { icon: '📅', label: 'Step 06', title: 'Showing Scheduled', desc: 'Make.com sends the Calendly link, showing auto-booked', badge: 'action' },
-        { icon: '📈', label: 'Step 07', title: 'Logged to Sheets', desc: 'Buyer activity appended to a Google Sheets tracker for the team', badge: 'action' },
-        { icon: '🗒️', label: 'Step 08', title: 'Logged to Notion', desc: 'Call summary and AI notes saved to your Notion CRM database', badge: 'action' },
-        { icon: '📌', label: 'Step 09', title: 'Task Assigned', desc: 'Make.com creates an Asana task — "Confirm showing" — assigned to the agent', badge: 'action' },
-        { icon: '✅', label: 'Done', title: 'Agent Notified', desc: 'Make.com sends a Slack alert for same-day follow-up', badge: 'done' }
+        { icon: '🏠', label: 'Trigger', title: 'New Inquiry Captured', desc: 'n8n webhook catches the buyer inquiry from the listing page', badge: 'trigger' },
+        { icon: '🔎', label: 'Step 01', title: 'Contact Formatted', desc: 'n8n parses name, phone, and listing ID', badge: 'action' },
+        { icon: '🤖', label: 'Step 02', title: 'AI Agent Qualifies', desc: 'AI agent (Claude) reads the message for budget and urgency', badge: 'action' },
+        { icon: '🤖', label: 'Step 03', title: 'AI Agent Matches Listings', desc: 'Finds the active listings that fit the buyer criteria and ranks the top three', badge: 'action' },
+        { icon: '📈', label: 'Step 04', title: 'Logged to Sheets', desc: 'n8n appends the buyer and matched listings to a Google Sheets tracker', badge: 'action' },
+        { icon: '🔗', label: 'Step 05', title: 'HTTP Request to GoHighLevel', desc: 'n8n creates the contact in GoHighLevel and tags it by property type', badge: 'action' },
+        { icon: '📞', label: 'Step 06', title: 'AI Voice Call Placed', desc: 'Vapi voice agent calls the buyer to confirm interest and showing time', badge: 'action' },
+        { icon: '{}', label: 'Step 07', title: 'Call Outcome Checked', desc: 'IF the buyer confirms on the call → continue to booking. IF not → log the outcome and end.', badge: 'condition' },
+        { icon: '📅', label: 'Step 08', title: 'Showing Booked', desc: 'GoHighLevel calendar books the showing and sends the confirmation', badge: 'action' },
+        { icon: '🔁', label: 'Step 09', title: 'GHL Webhook Back to n8n', desc: 'GoHighLevel fires a showing-booked webhook and n8n picks it up', badge: 'action' },
+        { icon: '✏️', label: 'Step 10', title: 'Contact Fields Updated', desc: 'n8n updates the GHL fields: matched listings, showing time, budget band', badge: 'action' },
+        { icon: '✅', label: 'Done', title: 'Agent Notified', desc: 'n8n sends a Slack alert for same-day follow-up', badge: 'done' }
       ],
       logLines: [
-        'Trigger fired → buyer inquiry received on listing #4471 via Make.com',
-        'Make.com → parsed: name ✓  phone ✓  listing ID ✓',
-        'Make.com AI Agent (Claude) → reading message... budget: $450–500k, urgency: "this month"',
-        'Vapi → AI voice call placed... buyer confirmed interest and showing time',
+        'Trigger fired → n8n webhook received a new buyer inquiry (Listing #2210)',
+        'n8n → parsed: name ✓  phone ✓  listing ID ✓',
+        'AI Agent (Claude) → qualified: budget ~$450k, urgency "high", pre-approved ✓',
+        'AI Agent → matched 3 active listings to buyer criteria, ranked by fit',
+        'n8n → row appended to "Buyer Tracker" in Google Sheets',
+        'n8n HTTP Request → POST /contacts/upsert to GoHighLevel, tags: single-family, $400-500k',
+        'Vapi → AI voice call placed... buyer confirmed interest and a Saturday showing',
         'IF confirmed on call → TRUE → continuing to booking (ELSE branch would log & end here)',
-        'POST /contacts → GoHighLevel API (201 Created), tagged "hot-buyer"',
-        'Make.com → Calendly showing slot sent for tomorrow 4:00 PM',
-        'Make.com → buyer logged to Google Sheets "Buyer Activity" tracker',
-        'Make.com → call summary logged to Notion CRM database',
-        'Make.com → Asana task "Confirm showing" assigned to agent',
-        'Make.com → Slack notified: showing confirmed for tomorrow 4:00 PM'
+        'GoHighLevel → showing booked for Saturday 11:00 AM, confirmation sent',
+        'GoHighLevel → webhook "appointment.booked" received back in n8n',
+        'n8n HTTP Request → PUT contact fields: matched_listings, showing_time, budget_band',
+        'n8n → Slack alert sent to the agent for same-day follow-up'
       ],
-      result: 'the inquiry was qualified by AI, confirmed live over an automated Vapi call, and routed by a simple IF/ELSE check — confirmed buyers get scheduled, logged to Sheets and Notion, and assigned to the agent in Asana automatically; anything unconfirmed gets logged instead of wasting a showing slot.',
-      stepDelay: 750,
-      aiExtra: 2300
+      result: 'the inquiry was qualified and matched to listings by an AI agent, logged to Sheets and synced to GoHighLevel over HTTP, confirmed live over a Vapi call, routed by a simple IF/ELSE check, booked, and sent back to n8n by webhook to update the contact fields.',
+      stepDelay: 600,
+      aiExtra: 900
     },
     {
-      id: 'clinic',
+      id: 'clinics',
       tab: '🩺 Clinics',
       badge: 'Patient Intake',
       noTimer: true,
       steps: [
-        { icon: '📋', label: 'Trigger', title: 'Appointment Requested', desc: 'Make.com watches the form and catches the patient intake submission', badge: 'trigger' },
-        { icon: '🔎', label: 'Step 01', title: 'Info Formatted', desc: 'Make.com parses name, insurance, and reason for visit', badge: 'action' },
-        { icon: '🤖', label: 'Step 02', title: 'AI Pre-Triage', desc: 'Make.com AI Agent (Claude) reads and flags urgency from the symptoms described', badge: 'action' },
-        { icon: '📞', label: 'Step 03', title: 'AI Voice Call Placed', desc: 'Vapi voice agent calls the patient to confirm symptoms and preferred time', badge: 'action' },
-        { icon: '{}', label: 'Step 04', title: 'Call Outcome Checked', desc: 'IF the patient confirms on the call → continue to booking. IF not → log the outcome and end.', badge: 'condition' },
-        { icon: '📊', label: 'Step 05', title: 'Synced to GoHighLevel', desc: 'Patient record created in your GoHighLevel CRM', badge: 'action' },
-        { icon: '📅', label: 'Step 06', title: 'Slot Scheduled', desc: 'Make.com books the next available slot based on urgency level', badge: 'action' },
-        { icon: '📈', label: 'Step 07', title: 'Logged to Sheets', desc: 'Patient intake appended to a Google Sheets tracker for the front desk', badge: 'action' },
-        { icon: '🗒️', label: 'Step 08', title: 'Logged to Notion', desc: 'Call summary and triage notes saved to your Notion patient log', badge: 'action' },
-        { icon: '📌', label: 'Step 09', title: 'Task Assigned', desc: 'Make.com creates an Asana task — "Prep patient file" — assigned to staff', badge: 'action' },
+        { icon: '📋', label: 'Trigger', title: 'Appointment Requested', desc: 'n8n webhook catches the intake form and parses name, insurance, and reason for visit', badge: 'trigger' },
+        { icon: '🤖', label: 'Step 01', title: 'AI Agent Pre-Triage', desc: 'AI agent (Claude) reads the request and flags urgency from the reason given', badge: 'action' },
+        { icon: '🤖', label: 'Step 02', title: 'AI Agent Finds Record', desc: 'Searches GoHighLevel for an existing patient and avoids creating a duplicate', badge: 'action' },
+        { icon: '📈', label: 'Step 03', title: 'Logged to Sheets', desc: 'n8n appends the intake to a Google Sheets tracker for the front desk', badge: 'action' },
+        { icon: '🔗', label: 'Step 04', title: 'HTTP Request to GoHighLevel', desc: 'n8n upserts the patient contact in GoHighLevel through the API', badge: 'action' },
+        { icon: '📞', label: 'Step 05', title: 'AI Voice Call Placed', desc: 'Vapi voice agent calls the patient to confirm the reason and preferred time', badge: 'action' },
+        { icon: '{}', label: 'Step 06', title: 'Call Outcome Checked', desc: 'IF the patient confirms on the call → continue to booking. IF not → log the outcome and end.', badge: 'condition' },
+        { icon: '🤖', label: 'Step 07', title: 'AI Agent Matches Provider', desc: 'Matches the right provider and the next open slot based on urgency', badge: 'action' },
+        { icon: '📅', label: 'Step 08', title: 'Appointment Booked', desc: 'GoHighLevel books the slot and sends the confirmation', badge: 'action' },
+        { icon: '🔁', label: 'Step 09', title: 'GHL Webhook Back to n8n', desc: 'GoHighLevel fires an appointment-booked webhook and n8n picks it up', badge: 'action' },
+        { icon: '✏️', label: 'Step 10', title: 'Contact Fields Updated', desc: 'n8n updates the patient fields: provider, appointment time, urgency, visit type', badge: 'action' },
         { icon: '✅', label: 'Done', title: 'Front Desk Notified', desc: 'Make.com alerts staff via Slack/SMS with the AI summary', badge: 'done' }
       ],
       logLines: [
-        'Trigger fired → new patient intake form submitted via Make.com',
-        'Make.com → parsed: name ✓  insurance ✓  reason for visit ✓',
-        'Make.com AI Agent (Claude) → pre-triage read... urgency flagged: "moderate, same-week"',
-        'Vapi → AI voice call placed... patient confirmed symptoms and preferred time',
+        'Trigger fired → n8n webhook received a new appointment request: name ✓  insurance ✓  reason ✓',
+        'AI Agent (Claude) → pre-triage complete: urgency "routine", no red flags in the request',
+        'AI Agent → searched GoHighLevel: existing patient found, no duplicate created',
+        'n8n → row appended to "Front Desk Intake" in Google Sheets',
+        'n8n HTTP Request → POST /contacts/upsert to GoHighLevel, 200 OK',
+        'Vapi → AI voice call placed... patient confirmed reason and preferred time',
         'IF confirmed on call → TRUE → continuing to booking (ELSE branch would log & end here)',
-        'POST /contacts → GoHighLevel API (201 Created)',
-        'Make.com → next available same-week slot booked automatically',
-        'Make.com → patient logged to Google Sheets front-desk tracker',
-        'Make.com → triage notes logged to Notion patient log',
-        'Make.com → Asana task "Prep patient file" assigned to staff',
-        'Make.com → Slack/SMS front desk notified with AI triage summary'
+        'AI Agent → matched Dr. Reyes, next open slot Tuesday 2:30 PM',
+        'GoHighLevel → appointment booked, confirmation sent to the patient',
+        'GoHighLevel → webhook "appointment.booked" received back in n8n',
+        'n8n HTTP Request → PUT contact fields: provider, appt_time, urgency, visit_type',
+        'Make.com → Slack/SMS to the front desk with the AI summary'
       ],
-      result: 'the intake was pre-triaged by AI, confirmed live over an automated Vapi call, and routed by a simple IF/ELSE check — confirmed patients get scheduled, logged to Sheets and Notion, and prepped for staff in Asana automatically; anything unconfirmed gets logged instead of holding a slot open.',
-      stepDelay: 800,
-      aiExtra: 3200
+      result: 'the request was triaged by an AI agent, matched to the right record, provider and slot, logged to Sheets and synced to GoHighLevel over HTTP, confirmed live over a Vapi call, booked, and sent back to n8n by webhook to update the patient fields.',
+      stepDelay: 600,
+      aiExtra: 900
     },
     {
-      id: 'agency',
+      id: 'agencies',
       tab: '🎨 Agencies',
       badge: 'New Brief',
       steps: [
-        { icon: '📋', label: 'Trigger', title: 'New Brief Submitted', desc: 'Make.com watches the form and catches the project brief submission', badge: 'trigger' },
-        { icon: '🔎', label: 'Step 01', title: 'Brief Formatted', desc: 'Make.com parses scope, budget, and deadline', badge: 'action' },
-        { icon: '🤖', label: 'Step 02', title: 'AI Scopes Project', desc: 'Make.com AI Agent (Claude) estimates hours and suggests a package tier', badge: 'action' },
-        { icon: '📊', label: 'Step 03', title: 'Logged in GoHighLevel', desc: 'Project card created on your GHL pipeline board', badge: 'action' },
-        { icon: '📌', label: 'Step 04', title: 'Tasks Created', desc: 'Make.com auto-assigns kickoff tasks to the team in Asana', badge: 'action' },
-        { icon: '✅', label: 'Done', title: 'PM Notified', desc: 'Make.com alerts Slack with the AI project summary', badge: 'done' }
+        { icon: '📋', label: 'Trigger', title: 'New Brief Submitted', desc: 'n8n webhook catches the project brief submission', badge: 'trigger' },
+        { icon: '🔎', label: 'Step 01', title: 'Brief Formatted', desc: 'n8n parses scope, budget, and deadline', badge: 'action' },
+        { icon: '🤖', label: 'Step 02', title: 'AI Agent Qualifies', desc: 'AI agent (Claude) checks the brief against your services and minimum budget', badge: 'action' },
+        { icon: '🤖', label: 'Step 03', title: 'AI Agent Tags and Scopes', desc: 'Estimates hours, suggests a package tier, and tags the lead', badge: 'action' },
+        { icon: '🤖', label: 'Step 04', title: 'AI Agent Finds Past Work', desc: 'Searches Drive for similar past projects and matches the best templates to reuse', badge: 'action' },
+        { icon: '📈', label: 'Step 05', title: 'Logged to Sheets', desc: 'n8n appends the brief, scope, and tier to your Google Sheets pipeline', badge: 'action' },
+        { icon: '🔗', label: 'Step 06', title: 'HTTP Request to GoHighLevel', desc: 'n8n creates the contact and project card on your GHL pipeline board', badge: 'action' },
+        { icon: '🔁', label: 'Step 07', title: 'GHL Webhook Back to n8n', desc: 'GoHighLevel fires a webhook when the card moves to Proposal Accepted and n8n picks it up', badge: 'action' },
+        { icon: '📌', label: 'Step 08', title: 'Tasks Created', desc: 'Zapier auto-assigns kickoff tasks to the team in Asana', badge: 'action' },
+        { icon: '🤖', label: 'Step 09', title: 'AI Agent Books Kickoff', desc: 'Finds a shared open slot and books the kickoff call', badge: 'action' },
+        { icon: '✏️', label: 'Step 10', title: 'Contact Fields Updated', desc: 'n8n updates the GHL fields: package tier, kickoff date, project owner', badge: 'action' },
+        { icon: '✅', label: 'Done', title: 'PM Notified', desc: 'n8n alerts Slack with the AI project summary', badge: 'done' }
       ],
       logLines: [
-        'Trigger fired → new project brief submitted via Make.com',
-        'Make.com → parsed: scope ✓  budget ✓  deadline ✓',
-        'Make.com AI Agent (Claude) → estimating scope... suggested tier: "Growth Package", ~18 hrs',
-        'GoHighLevel → project card created in "New Requests" pipeline',
-        'Make.com → 4 kickoff tasks created and assigned to team in Asana',
-        'Make.com → Slack PM notified with AI project summary, ready to review'
+        'Trigger fired → n8n webhook caught a new project brief submission',
+        'n8n → parsed: scope ✓  budget ✓  deadline ✓',
+        'AI Agent (Claude) → qualified: fits "Brand Site" service, budget above the minimum',
+        'AI Agent → estimated 42 hrs, suggested "Growth" tier, tags: web-build, mid-budget',
+        'AI Agent → matched 2 similar past projects in Drive, templates attached',
+        'n8n → row appended to "Agency Pipeline" in Google Sheets',
+        'n8n HTTP Request → POST /contacts/ and /opportunities/ to GoHighLevel, 200 OK',
+        'GoHighLevel → webhook "opportunity.stage_changed" received back in n8n',
+        'Zapier → 4 kickoff tasks created and assigned to the team in Asana',
+        'AI Agent → found a shared open slot, kickoff booked Monday 9:00 AM',
+        'n8n HTTP Request → PUT contact fields: package_tier, kickoff_date, project_owner',
+        'n8n → Slack PM notified with the AI project summary, ready to review'
       ],
-      result: 'the brief was formatted and scoped by AI, logged in GoHighLevel, and kickoff tasks were assigned — before your team even opened their inbox.',
-      stepDelay: 850,
-      aiExtra: 3600
+      result: 'the brief was qualified, scoped, and tagged by an AI agent, logged to Sheets and synced to GoHighLevel over HTTP, picked up again by webhook, the kickoff booked, and the contact fields updated — before your team even opened their inbox.',
+      stepDelay: 600,
+      aiExtra: 900
     }
   ];
 
@@ -2281,9 +2580,23 @@ if (navBurger && navMobilePanel) {
   let running = false;
   const stepDelay = 700;
 
+  // Line icons (replace emoji) — same stroke style everywhere
+  const WF_ICONS = {"🔗": "<path d=\"M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1\"/><path d=\"M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1\"/>", "🔁": "<path d=\"M4 12a8 8 0 0 1 13.5-5.8L20 8.5\"/><path d=\"M20 4v4.5h-4.5\"/><path d=\"M20 12a8 8 0 0 1-13.5 5.8L4 15.5\"/><path d=\"M4 20v-4.5h4.5\"/>", "✏": "<path d=\"M4 20l1-4L16.5 4.5a2 2 0 0 1 3 3L8 19z\"/><path d=\"m14.5 6.5 3 3\"/>", "🛒": "<circle cx=\"9\" cy=\"20\" r=\"1.4\"/><circle cx=\"18\" cy=\"20\" r=\"1.4\"/><path d=\"M2 3h3l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h8.4a1.5 1.5 0 0 0 1.5-1.1L20.5 8H6\"/>", "🔎": "<circle cx=\"11\" cy=\"11\" r=\"6.5\"/><path d=\"m20 20-4.2-4.2\"/>", "🤖": "<rect x=\"4\" y=\"8\" width=\"16\" height=\"11\" rx=\"3\"/><path d=\"M12 8V5\"/><circle cx=\"12\" cy=\"3.8\" r=\"1.1\"/><circle cx=\"9\" cy=\"13.5\" r=\"1\" fill=\"currentColor\"/><circle cx=\"15\" cy=\"13.5\" r=\"1\" fill=\"currentColor\"/><path d=\"M2.5 13v3M21.5 13v3\"/>", "📋": "<rect x=\"5\" y=\"4\" width=\"14\" height=\"17\" rx=\"2.5\"/><path d=\"M9 4h6v3H9z\"/><path d=\"M8.5 12h7M8.5 16h5\"/>", "📞": "<path d=\"M5 4h3.5l1.5 4.2-2 1.3a11 11 0 0 0 5.5 5.5l1.3-2 4.2 1.5V18a2 2 0 0 1-2 2A13 13 0 0 1 3 6a2 2 0 0 1 2-2z\"/>", "{}": "<path d=\"M6 4v9\"/><path d=\"M18 11a5 5 0 0 1-5 5H6\"/><circle cx=\"6\" cy=\"4\" r=\"1.8\"/><circle cx=\"18\" cy=\"9\" r=\"1.8\"/><circle cx=\"6\" cy=\"16\" r=\"1.8\"/>", "📊": "<path d=\"M4 20V11M10 20V4M16 20v-6M22 20H2\"/>", "📅": "<rect x=\"3.5\" y=\"5\" width=\"17\" height=\"15\" rx=\"2.5\"/><path d=\"M3.5 10h17M8 3v4M16 3v4\"/>", "📈": "<path d=\"M3 17l6-6 4 4 8-8\"/><path d=\"M15 7h6v6\"/>", "🗒": "<path d=\"M6 3h9l4 4v14H6z\"/><path d=\"M14.5 3v5H19M9 13h7M9 17h5\"/>", "📌": "<rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"3\"/><path d=\"m8.5 12.2 2.4 2.4 4.6-5\"/>", "✅": "<circle cx=\"12\" cy=\"12\" r=\"8.5\"/><path d=\"m8.3 12.3 2.6 2.6 4.8-5.2\"/>", "🏠": "<path d=\"M4 11l8-7 8 7\"/><path d=\"M6 10v9h12v-9\"/><path d=\"M10 19v-5h4v5\"/>", "🎯": "<circle cx=\"12\" cy=\"12\" r=\"8\"/><circle cx=\"12\" cy=\"12\" r=\"4\"/><circle cx=\"12\" cy=\"12\" r=\".8\" fill=\"currentColor\"/>", "🩺": "<rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"4\"/><path d=\"M12 8v8M8 12h8\"/>", "🎨": "<path d=\"M12 3l9 5-9 5-9-5 9-5z\"/><path d=\"M3 13l9 5 9-5\"/>"};
+  function wfIco(e) {
+    if (typeof e === 'string' && e.indexOf('<svg') === 0) return e;
+    const k = String(e).replace(/\uFE0F/g, '').trim();
+    return WF_ICONS[k]
+      ? '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + WF_ICONS[k] + '</svg>'
+      : e;
+  }
+  function wfTab(t) {
+    const m = String(t).match(/^(\S+)\s+([\s\S]*)$/);
+    return m ? '<span class="ind-tab-ico">' + wfIco(m[1]) + '</span><span>' + m[2] + '</span>' : t;
+  }
+
   function renderTabs() {
     tabsWrap.innerHTML = scenarios
-      .map((s, i) => '<button class="ind-tab' + (i === current ? ' active' : '') + '" data-i="' + i + '">' + s.tab + '</button>')
+      .map((s, i) => '<button class="ind-tab' + (i === current ? ' active' : '') + '" data-i="' + i + '">' + wfTab(s.tab) + '</button>')
       .join('');
     Array.from(tabsWrap.querySelectorAll('.ind-tab')).forEach(btn => {
       btn.addEventListener('click', () => {
@@ -2300,15 +2613,16 @@ if (navBurger && navMobilePanel) {
     const scenario = scenarios[current];
     stepsWrap.innerHTML = scenario.steps
       .map((s, i) => {
-        const arrow = i < scenario.steps.length - 1 ? '<div class="flow-arrow">→</div>' : '';
         return (
           '<div class="flow-step" data-step="' + i + '">' +
-          '<span class="flow-icon">' + s.icon + '</span>' +
+          '<span class="flow-icon">' + wfIco(s.icon) + '</span>' +
+          '<div class="flow-body">' +
           '<div class="flow-step-label">' + s.label + '</div>' +
           '<div class="flow-step-title">' + s.title + '</div>' +
           '<div class="flow-step-desc">' + s.desc + '</div>' +
+          '</div>' +
           '<span class="flow-badge ' + s.badge + '">' + s.badge + '</span>' +
-          '</div>' + arrow
+          '</div>'
         );
       })
       .join('');
@@ -2372,6 +2686,7 @@ if (navBurger && navMobilePanel) {
       setTimeout(() => {
         if (i > 0) steps[i - 1].classList.remove('pg-active');
         if (i > 0) steps[i - 1].classList.add('pg-done');
+        step.style.setProperty('--fill', durations[i] + 'ms');
         step.classList.add('pg-active');
         centerStep(step);
         appendLine(scenario.logLines[i], i === steps.length - 1 ? 'pg-ok' : '', elapsedAt[i]);
@@ -2592,5 +2907,243 @@ setTimeout(go,900)})();
   }catch(e){console.warn('sparkles failed',e)}
 })();
 </script>
+<!-- Motion layer: GSAP + ScrollTrigger + SplitText + Lenis (local copies) -->
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/ScrollTrigger.min.js"></script>
+<script src="js/vendor/SplitText.min.js"></script>
+<script src="js/vendor/lenis.min.js"></script>
+<script src="js/motion.js"></script>
+<script id="svc-fs-js">
+/* What I Build — full-screen scroll story. Builds from the existing cards; the original grid stays as the fallback. */
+(function () {
+  var old = document.getElementById('services');
+  if (!old) return;
+  var cards = Array.prototype.slice.call(old.querySelectorAll('.svc-card'));
+  if (!cards.length) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+
+  var label = (old.querySelector('.section-label') || {}).textContent || 'What I Build';
+  var heading = old.querySelector('.section-heading');
+  var sub = (old.querySelector('.section-sub') || {}).textContent || '';
+  var N = cards.length + 1;                         // intro + every card
+  var STEP = 0.9;                                   // viewport heights of scrolling per slide
+
+  var wrap = document.createElement('section');
+  wrap.className = 'svc-fs';
+  wrap.id = 'what-i-build';
+  wrap.setAttribute('aria-label', 'What I build');
+  var pin = document.createElement('div');
+  pin.className = 'svc-fs-pin';
+  wrap.appendChild(pin);
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  var slides = [];
+
+  // intro slide
+  var intro = document.createElement('div');
+  intro.className = 'fs-slide fs-intro';
+  intro.innerHTML =
+    '<div class="fs-body"><div class="fs-copy">' +
+    '<div class="fs-kicker"><i></i>' + label + '</div>' +
+    '<h2 class="fs-title">' + (heading ? heading.innerHTML : 'Automation services<br>built for results') + '</h2>' +
+    '<p class="fs-desc">' + sub + '</p>' +
+    '<div class="fs-hint"><b></b>Scroll to explore</div>' +
+    '</div></div>';
+  pin.appendChild(intro); slides.push(intro);
+
+  cards.forEach(function (c, i) {
+    var ico = c.querySelector('.svc-icon');
+    var num = c.querySelector('.svc-num');
+    var ttl = c.querySelector('.svc-title');
+    var dsc = c.querySelector('.svc-desc');
+    var s = document.createElement('div');
+    s.className = 'fs-slide';
+    s.innerHTML =
+      '<div class="fs-body"><div class="fs-copy">' +
+      '<div class="fs-kicker"><i></i>' + (num ? num.textContent : '') + '</div>' +
+      '<h3 class="fs-title">' + (ttl ? ttl.innerHTML : '') + '</h3>' +
+      '<p class="fs-desc">' + (dsc ? dsc.innerHTML : '') + '</p>' +
+      '</div><div class="fs-art" aria-hidden="true"><div class="fs-ico">' + (ico ? ico.innerHTML : '') + '</div></div></div>';
+    pin.appendChild(s); slides.push(s);
+  });
+
+  // rail + counter
+  var rail = document.createElement('div');
+  rail.className = 'fs-rail';
+  var dots = slides.map(function (_, i) {
+    var b = document.createElement('button');
+    b.className = 'fs-dot'; b.type = 'button';
+    b.setAttribute('aria-label', i === 0 ? 'Intro' : 'Go to service ' + i);
+    b.addEventListener('click', function () { goTo(i); });
+    rail.appendChild(b); return b;
+  });
+  pin.appendChild(rail);
+  var count = document.createElement('div');
+  count.className = 'fs-count';
+  count.innerHTML = '<span class="fs-bar"><i></i></span>';
+  pin.appendChild(count);
+  var barEl = count.querySelector('.fs-bar i');
+
+  old.parentNode.insertBefore(wrap, old);
+  old.classList.add('svc-fs-off');
+
+  // pause the background particles while this full-screen section covers them (saves GPU/CPU while scrolling)
+  (function () {
+    if (!('IntersectionObserver' in window)) return;
+    new IntersectionObserver(function (es) {
+      var on = es[0].isIntersecting;
+      try { if (window.__circuitPause) window.__circuitPause(on); } catch (e) {}
+      try { if (window.tsParticles && tsParticles.dom) tsParticles.dom().forEach(function (c) { on ? c.pause() : c.play(); }); } catch (e) {}
+    }, { threshold: 0.02 }).observe(wrap);
+  })();
+
+  var vh = window.innerHeight, top = 0;
+  function measure() {
+    vh = window.innerHeight;
+    wrap.style.height = (vh * (1 + (N - 1) * STEP)) + 'px';
+    top = wrap.getBoundingClientRect().top + window.pageYOffset;
+  }
+  var tw = 0, goal = -1;
+  function stopTween() { if (tw) { cancelAnimationFrame(tw); tw = 0; } goal = -1; }
+  function goTo(i) {
+    i = Math.max(0, Math.min(N - 1, i));
+    stopTween(); goal = i;
+    var from = window.pageYOffset, to = top + i * STEP * vh + 1, t0 = null, dur = Math.min(900, 450 + Math.abs(to - from) * 0.15);
+    function step(t) {
+      if (t0 === null) t0 = t;
+      var k = Math.min(1, (t - t0) / dur), e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+      window.scrollTo(0, from + (to - from) * e);
+      if (k < 1) tw = requestAnimationFrame(step); else { tw = 0; goal = -1; }
+    }
+    tw = requestAnimationFrame(step);
+  }
+  ['wheel', 'touchstart', 'mousedown'].forEach(function (ev) { window.addEventListener(ev, stopTween, { passive: true }); });
+  function pinned() { var r = wrap.getBoundingClientRect(); return r.top <= 48 && r.bottom >= window.innerHeight - 48; }
+  window.addEventListener('keydown', function (e) {
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    var el = e.target, tag = el && el.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || tag === 'BUTTON' && e.key === ' ' || (el && el.isContentEditable)) return;
+    if (el && el.closest && el.closest('[role="dialog"],.modal,.viewer')) return;
+    var k = e.key, dir = 0;
+    if (k === 'ArrowDown' || k === 'PageDown' || (k === ' ' && !e.shiftKey)) dir = 1;
+    else if (k === 'ArrowUp' || k === 'PageUp' || (k === ' ' && e.shiftKey)) dir = -1;
+    else return;
+    if (!pinned()) return;
+    var at = goal >= 0 ? goal : Math.round(Math.max(0, Math.min(N - 1, (window.pageYOffset - top) / (STEP * vh))));
+    var nx = at + dir;
+    if (nx < 0 || nx > N - 1) return;            // at either end: let the page keep scrolling normally
+    e.preventDefault(); goTo(nx);
+  });
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  var lastIdx = -1;
+  function ease(x) { x = clamp(x, 0, 1); return x * x * (3 - 2 * x); }
+  function render(pc) {
+    var near = Math.round(pc);
+    for (var i = 0; i < N; i++) {
+      var raw = clamp(i - pc, -1.2, 1.2);
+      var t = (raw < 0 ? -1 : 1) * (ease(Math.abs(raw)) * 0.55 + Math.abs(raw) * 0.45);   // eased: lingers at centre, glides between
+      var a = Math.abs(t);
+      var s = slides[i];
+      if (a >= 1.15) { if (s.classList.contains('on')) s.classList.remove('on', 'act'); continue; }
+      var o = 1 - ease((a - 0.06) / 0.62);
+      s.classList.add('on');
+      s.classList.toggle('act', i === near);
+      s.style.setProperty('--t', (-t).toFixed(3));
+      s.style.setProperty('--o', o.toFixed(3));
+      s.style.setProperty('--y', (t * 90).toFixed(1) + 'px');
+      s.style.setProperty('--s', (1 - Math.min(1, a) * 0.07).toFixed(3));
+    }
+    if (near !== lastIdx) {
+      lastIdx = near;
+      dots.forEach(function (d, k) { d.classList.toggle('on', k === near); });
+    }
+    pin.style.setProperty('--p', (pc / (N - 1)).toFixed(4));
+    barEl.parentNode.style.setProperty('--p', (pc / (N - 1)).toFixed(4));
+  }
+  var raf = 0, cur = 0, started = false;
+  function target() { return clamp((window.pageYOffset - top) / (STEP * vh), 0, N - 1); }  var vel = 0;
+  function tick() {
+    var tg = target();
+    cur = /\blenis\b/.test(document.documentElement.className) ? tg : cur + (tg - cur) * 0.3;
+    if (Math.abs(tg - cur) < 0.0008) cur = tg;
+    render(cur);
+    raf = (cur !== tg) ? requestAnimationFrame(tick) : 0;
+  }
+  function req() { if (!raf) raf = requestAnimationFrame(tick); }
+  measure(); cur = target(); render(cur);
+  window.addEventListener('scroll', req, { passive: true });
+  window.addEventListener('resize', function () { measure(); req(); });
+  window.addEventListener('load', function () { measure(); req(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measure(); req(); });
+})();
+</script>
+<style id="fs-v2">
+/* Card + icon transitions v2: depth-tilt cards, staggered word rise, flip-in icons, popping tiles */
+.fs-slide{transform:perspective(1500px) translate3d(0,var(--y,0px),0) rotateX(calc(var(--t,0)*9deg)) scale(var(--s,1))}
+.fs-title .w{display:inline-block;transform:translateY(calc(var(--t,0)*var(--wd,0)*-1px))}
+.fs-kicker i{transform-origin:left;transform:scaleX(0);transition:transform .7s cubic-bezier(.2,.8,.2,1) .1s}
+.fs-slide.act .fs-kicker i{transform:scaleX(1)}
+.fs-art{transform:perspective(900px) translateY(calc(var(--t,0)*-40px)) rotateY(calc(var(--t,0)*-70deg)) rotate(calc(var(--t,0)*7deg))}
+.fs-slide.act .fs-ico{animation:fsPop .95s cubic-bezier(.2,1.25,.3,1) both,fsBob 5.5s ease-in-out .95s infinite}
+.fs-slide.act .fs-art::before{animation:fsRing 1s cubic-bezier(.2,.8,.2,1) both}
+@keyframes fsPop{0%{opacity:0;transform:scale(.45) rotate(-24deg)}60%{opacity:1}100%{opacity:1;transform:none}}
+@keyframes fsBob{0%,100%{translate:0 0}50%{translate:0 -9px}}
+@keyframes fsRing{0%{transform:scale(.78);opacity:0}100%{transform:none;opacity:1}}
+.fs-slide .sf-tile{opacity:0;scale:.55;transition:opacity .2s,scale .2s,border-color .3s,box-shadow .3s}
+.fs-slide.act .sf-tile{opacity:1;scale:1;transition:opacity .45s calc(var(--i,0)*70ms),scale .75s cubic-bezier(.2,1.3,.3,1) calc(var(--i,0)*70ms),border-color .3s,box-shadow .3s}
+.fs-slide .sf-use li{opacity:0;translate:0 16px;transition:opacity .2s,translate .2s}
+.fs-slide.act .sf-use li{opacity:1;translate:0 0;transition:opacity .5s,translate .6s cubic-bezier(.2,.8,.2,1)}
+.fs-slide.act .sf-use li:nth-child(1){transition-delay:.15s}.fs-slide.act .sf-use li:nth-child(2){transition-delay:.25s}
+.fs-slide.act .sf-use li:nth-child(3){transition-delay:.35s}.fs-slide.act .sf-use li:nth-child(4){transition-delay:.45s}
+@media(prefers-reduced-motion:reduce){.fs-slide.act .fs-ico,.fs-slide.act .fs-art::before{animation:none}}
+</style>
+<script id="fs-v2-js">
+(function () {
+  var wrap = document.querySelector('.svc-fs'); if (!wrap) return;
+  // word-by-word title spans for a staggered rise
+  wrap.querySelectorAll('.fs-title').forEach(function (h) {
+    var wi = 0, tw = document.createTreeWalker(h, NodeFilter.SHOW_TEXT), nodes = [], n;
+    while ((n = tw.nextNode())) nodes.push(n);
+    nodes.forEach(function (t) {
+      var parts = t.nodeValue.split(/(\s+)/), f = document.createDocumentFragment();
+      parts.forEach(function (p) {
+        if (!p) return;
+        if (/^\s+$/.test(p)) { f.appendChild(document.createTextNode(p)); return; }
+        var s = document.createElement('span'); s.className = 'w'; s.style.setProperty('--wd', 10 + wi * 14); s.textContent = p; f.appendChild(s); wi++;
+      });
+      t.parentNode.replaceChild(f, t);
+    });
+  });
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // settle: when scrolling stops, glide to the nearest card so it always lands on one
+  var STEP = 0.9, N = wrap.querySelectorAll('.fs-slide').length, timer = 0, tw2 = 0, down = false;
+  function stop() { if (tw2) { cancelAnimationFrame(tw2); tw2 = 0; } }
+  function settle() {
+    if (down || tw2) return;
+    var vh = window.innerHeight, top = wrap.getBoundingClientRect().top + window.pageYOffset;
+    var p = (window.pageYOffset - top) / (STEP * vh);
+    if (p < 0 || p > N - 1) return;                              // outside the story: leave the page alone
+    var r = Math.round(p), to = top + r * STEP * vh + (r === 0 ? 1 : 0), from = window.pageYOffset;
+    if (r === N - 1) to = top + r * STEP * vh - 1;
+    if (Math.abs(to - from) < 2) return;
+    var t0 = null, dur = Math.min(650, 300 + Math.abs(to - from) * 0.5);
+    function step(t) {
+      if (t0 === null) t0 = t;
+      var k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      window.scrollTo(0, from + (to - from) * e);
+      if (k < 1) tw2 = requestAnimationFrame(step); else tw2 = 0;
+    }
+    tw2 = requestAnimationFrame(step);
+  }
+  window.addEventListener('scroll', function () { if (tw2) return; clearTimeout(timer); timer = setTimeout(settle, 170); }, { passive: true });
+  ['wheel', 'touchstart', 'keydown'].forEach(function (ev) { window.addEventListener(ev, function () { stop(); clearTimeout(timer); }, { passive: true }); });
+  window.addEventListener('mousedown', function () { down = true; stop(); }, { passive: true });
+  window.addEventListener('mouseup', function () { down = false; clearTimeout(timer); timer = setTimeout(settle, 170); }, { passive: true });
+  window.addEventListener('touchend', function () { clearTimeout(timer); timer = setTimeout(settle, 260); }, { passive: true });
+})();
+</script>
+
 </body>
 </html>
